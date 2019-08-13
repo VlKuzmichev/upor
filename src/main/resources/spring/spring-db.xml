@@ -42,6 +42,7 @@
     </bean>
 
     <context:component-scan base-package="rzd.zrw.**.repository"/>
+    <context:component-scan base-package="rzd.zrw.**.service"/>
     <jpa:repositories base-package="rzd.zrw.**.repository"/>
 
     <tx:annotation-driven/>

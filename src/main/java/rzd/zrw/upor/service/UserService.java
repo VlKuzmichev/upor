@@ -8,14 +8,15 @@ public interface UserService {
 
     User save(User user);
 
-    // false if not found
-    boolean delete(int id);
+    void delete(int id);
 
     // null if not found
     User get(int id);
 
     // null if not found
     User getByEmail(String email);
+
+    void update(User user);
 
     List<User> getAll();
 }
