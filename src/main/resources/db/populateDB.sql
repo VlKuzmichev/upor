@@ -5,16 +5,14 @@ DELETE FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, full_name, email, password) VALUES
-  ('Usersvyaz', 'Ivanov Ivan Ivanovich', 'usersv@yandex.ru', 'password'),
-  ('Userradio', 'Petrov Petr Petrovich', 'userrad@yandex.ru', 'password'),
+  ('User', 'Ivanov Ivan Ivanovich', 'usersv@yandex.ru', 'password'),
   ('Disp', 'Dispetcherov Disp Dispetcherovich', 'disp@yandex.ru', 'disp'),
   ('Admin', 'Adminovich Adminus Adminov', 'admin@gmail.com', 'admin');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
-  ('ROLE_USER', 100001),
-  ('ROLE_DISPATCHER', 100002),
-  ('ROLE_ADMIN', 100003);
+  ('ROLE_DISPATCHER', 100001),
+  ('ROLE_ADMIN', 100002);
 
 INSERT INTO devs_comm (date_time, reg_list, type_comm, location, defect, description, resp_empl, user_id)
 VALUES ('2019-07-27 11:00:00', '93237706', 'ПАБ', 'Чернышевск – Букачача', 'Не работает ПАБ (телеграмма ДНЧ Мурзина В.С.)', 'Будут разбираться 17-18-19.10.18г.
@@ -36,7 +34,7 @@ VALUES ('2019-07-30 10:00:00', '93-247779', 'ПРС', 'УКВ Кокуй', 'Не
 07.03.19г. Проблема в П-305, помеха по каналу, идет наложение частот. РЦСН Трофимов Д.А.
 Выезд запланирован на
  02.04.19г. Меняли блоки Приема, Передачи, настройка каналов П-305. Подключение к р/ст есть, СКП нет.  РЦСНС Косяков',
-'Косяков К.С.', 100001),
+'Косяков К.С.', 100000),
        ('2019-07-31 13:00:00', '94-247767', 'ТУ-ТС', 'Шилка – Укурей', 'Помеха по ТУ-ТС от о/п Бянкино.', 'Необходим совместный выезд с механиками РРУ, выезд запланируют на неделе.
 2.04.19г Замена ШВИ механиками ТУ-ТС.помехи нет. На контроле. РЦСНС Косяков К.С.',
-'Косяков К.С.', 100001);
+'Косяков К.С.', 100000);

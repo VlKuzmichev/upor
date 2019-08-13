@@ -1,20 +1,19 @@
 package rzd.zrw.upor.service;
 
 import rzd.zrw.upor.model.User;
+import rzd.zrw.upor.util.exception.NotFoundException;
 
 import java.util.List;
 
 public interface UserService {
 
-    User save(User user);
+    User create(User user);
 
-    void delete(int id);
+    void delete(int id) throws NotFoundException;
 
-    // null if not found
-    User get(int id);
+    User get(int id) throws NotFoundException;
 
-    // null if not found
-    User getByEmail(String email);
+    User getByEmail(String email) throws NotFoundException;
 
     void update(User user);
 
