@@ -1,6 +1,5 @@
 package rzd.zrw.upor.service;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import rzd.zrw.upor.model.Role;
@@ -19,6 +18,11 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(user, USER);
     }
 
+    @Test(expected = NotFoundException.class)
+    public void testGetNotFound() throws Exception {
+        User user = service.get(1);
+    }
+
     @Test
     public void testCreate() throws Exception {
         User user = new User(null, "newUser", "TEST TEST TEST", "email@email.ru", "password", Role.ROLE_USER);
@@ -33,19 +37,28 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(service.getAll(), ADMIN, USER);
     }
 
-    @Test(expected = DataAccessException.class)
-    public void testDuplicateMailCreate() throws Exception {
-        service.create(new User(null, "newUser", "TEST TEST TEST", "disp@yandex.ru", "password", Role.ROLE_USER));
-    }
-
     @Test(expected = NotFoundException.class)
     public void testDeleteNotFound() throws Exception {
         service.delete(5);
     }
 
     @Test(expected = NotFoundException.class)
-    public void textGetByEmail() throws Exception {
-        service.getByEmail("usersv@yandex.u");
+    public void testGetByEmail() throws Exception {
+        User user = service.getByEmail("usersv@yandex.u");
+        assertMatch(user, USER);
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void testDuplicateMailCreate() throws Exception {
+        service.create(new User(null, "newUser", "TEST TEST TEST", "disp@yandex.ru", "password", Role.ROLE_USER));
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        User updated = new User(USER);
+        updated.setFullName("Updated User Userovich");
+        service.update(updated);
+        assertMatch(service.get(100000), updated);
     }
 
     @Test
