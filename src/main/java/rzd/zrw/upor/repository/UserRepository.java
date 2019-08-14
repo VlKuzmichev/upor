@@ -1,12 +1,13 @@
 package rzd.zrw.upor.repository;
 
 
+import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.User;
 
 import java.util.List;
 
 public interface UserRepository {
-    User save(User user);
+    User save(User user, int id);
 
     // false if not found
     boolean delete(int id);
@@ -19,4 +20,5 @@ public interface UserRepository {
 
     List<User> getAll();
 
+    List<User> getAllByDepartment(Department department);
 }

@@ -12,8 +12,7 @@ public class DeviceComm extends AbstractBaseEntity {
     private String responsibleEmployees;
     private Boolean status;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @NotNull
+    //    @NotNull
     private User user;
 
     public DeviceComm() {

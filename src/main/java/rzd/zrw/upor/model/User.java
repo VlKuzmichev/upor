@@ -1,6 +1,8 @@
 package rzd.zrw.upor.model;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -17,7 +19,8 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 public class User extends AbstractNamedEntity {
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name")
+    @Size(max = 100)
     private String fullName;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -41,11 +44,16 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private Date registered = new Date();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
+    private Department department;
+
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-//    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
     private Set<Role> roles;
 
@@ -53,20 +61,21 @@ public class User extends AbstractNamedEntity {
     }
 
     public User(User u) {
-        this(u.getId(), u.getName(), u.getFullName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
+        this(u.getId(), u.getName(), u.getFullName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getDepartment(), u.getRoles());
     }
 
-    public User(Integer id, String name, String fullName, String email, String password, Role role, Role... roles) {
-        this(id, name, fullName, email, password, true, new Date(), EnumSet.of(role, roles));
+    public User(Integer id, String name, String fullName, String email, String password, Department department, Role role, Role... roles) {
+        this(id, name, fullName, email, password, true, new Date(), department, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String fullName, String email, String password, boolean enabled, Date registered, Collection<Role> roles) {
+    public User(Integer id, String name, String fullName, String email, String password, boolean enabled, Date registered, Department department, Collection<Role> roles) {
         super(id, name);
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
+        this.department = department;
         setRoles(roles);
     }
 
@@ -96,6 +105,14 @@ public class User extends AbstractNamedEntity {
 
     public void setRegistered(Date registered) {
         this.registered = registered;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public void setEnabled(boolean enabled) {

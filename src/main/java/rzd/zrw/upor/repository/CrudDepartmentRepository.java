@@ -7,31 +7,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import rzd.zrw.upor.model.Department;
-import rzd.zrw.upor.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface CrudUserRepository extends JpaRepository<User, Integer> {
+public interface CrudDepartmentRepository extends JpaRepository<Department, Integer> {
+
     @Transactional
     @Modifying
-    @Query("DELETE FROM User u WHERE u.id=:id")
+    @Query("DELETE FROM Department d WHERE d.id=:id")
     int delete(@Param("id") int id);
 
     @Override
     @Transactional
-    User save(User user);
+    Department save(Department department);
 
     @Override
-    Optional<User> findById(Integer id);
+    Optional<Department> findById(Integer id);
 
     @Override
-    List<User> findAll(Sort sort);
-
-    @Modifying
-    @Query("SELECT u FROM User u WHERE u.department=:department")
-    List<User> findAllByDepartment(Department department);
-
-    User getByEmail(String email);
+    List<Department> findAll(Sort sort);
 }

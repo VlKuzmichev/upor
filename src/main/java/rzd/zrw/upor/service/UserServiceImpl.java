@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import rzd.zrw.upor.model.User;
+import rzd.zrw.upor.repository.DepartmentRepository;
 import rzd.zrw.upor.repository.UserRepository;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
@@ -19,10 +20,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     @Override
     @Transactional
-    public User create(User user) {
-        return repository.save(user);
+    public User create(User user, int departmentId) {
+        return repository.save(user, departmentId);
     }
 
     @Override
@@ -44,9 +48,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void update(User user) {
+    public void update(User user, int userId) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(repository.save(user), user.getId());
+        //repository.save(user, userId);
+        checkNotFoundWithId(repository.save(user, userId), user.getId());
     }
 
 
