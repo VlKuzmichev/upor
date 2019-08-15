@@ -1,6 +1,8 @@
 package rzd.zrw.upor.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -24,12 +26,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
     public User create(User user, int departmentId) {
         return repository.save(user, departmentId);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
     public void delete(int id) throws NotFoundException {
@@ -47,6 +51,7 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
     public void update(User user, int userId) {
@@ -54,6 +59,7 @@ public class UserServiceImpl implements UserService {
         checkNotFoundWithId(repository.save(user, userId), user.getId());
     }
 
+    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.getAll();
@@ -63,4 +69,5 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllByDepartment(Department department){
         return repository.getAllByDepartment(department);
     }
+
 }

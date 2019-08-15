@@ -41,10 +41,15 @@ public class UserServiceTest extends AbstractServiceTest {
         service.delete(5);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void testGetByEmail() throws Exception {
-        User user = service.getByEmail("usersv@yandex.u");
+        User user = service.getByEmail("usersv@yandex.ru");
         assertMatch(user, USER);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetByEmailNotFound() throws Exception {
+        User user = service.getByEmail("usersv@yandex.u");
     }
 
     @Test(expected = DataAccessException.class)
@@ -64,5 +69,10 @@ public class UserServiceTest extends AbstractServiceTest {
     public void testGetAll() throws Exception {
         List<User> users = service.getAll();
         assertMatch(users, ADMIN, DISPATCHER, USER);
+    }
+
+    @Test
+    public void testGetByDepartment() throws Exception {
+      //  User user = service.
     }
 }
