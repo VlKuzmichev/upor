@@ -72,7 +72,14 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testGetByDepartment() throws Exception {
-      //  User user = service.
+    public void testGetWithDepartment() throws Exception {
+        User user = service.getWithDepartment(USER_ID, 100003);
+        assertMatch(user, USER);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testGetWithDepartmentNotFound() throws Exception {
+        User user = service.getWithDepartment(USER_ID, 100000);
+        assertMatch(user, USER);
     }
 }

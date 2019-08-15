@@ -45,7 +45,7 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> getAllByDepartment(Department department) {
-        return crudUserRepository.findAllByDepartment(department);
+    public User getWithDepartment(int id, int departmentId) {
+        return crudUserRepository.getWithDepartment(id, departmentId);
     }
 }

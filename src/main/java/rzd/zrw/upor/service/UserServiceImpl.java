@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllByDepartment(Department department){
-        return repository.getAllByDepartment(department);
+    public User getWithDepartment(int id, int departmentId){
+        return repository.getWithDepartment(id, departmentId);
     }
 
 }
