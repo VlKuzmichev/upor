@@ -16,14 +16,14 @@ public class UserTestData {
     public static final Department DEPARTMENT = new Department(DEPART_ID, "RCS3", "Full name rcs3");
 
     public static final User USER = new User(USER_ID, "User", "Ivanov Ivan Ivanovich",
-            "usersv@yandex.ru", "password", DEPARTMENT, Role.ROLE_USER);
+            "usersv@yandex.ru", "password", Role.ROLE_USER);
     public static final User DISPATCHER = new User(USER_ID + 1, "Disp", "Dispetcherov Disp Dispetcherovich",
-            "disp@yandex.ru", "disp", DEPARTMENT, Role.ROLE_DISPATCHER);
+            "disp@yandex.ru", "disp", Role.ROLE_DISPATCHER);
     public static final User ADMIN = new User(USER_ID + 2, "Admin", "Adminovich Adminus Adminov",
-            "admin@gmail.com", "admin", DEPARTMENT, Role.ROLE_ADMIN);
+            "admin@gmail.com", "admin", Role.ROLE_ADMIN);
 
     public static User getCreated() {
-        return new User(null, "newUser", "TEST TEST TEST", "email@email.ru", "password", DEPARTMENT, Role.ROLE_USER);
+        return new User(null, "newUser", "TEST TEST TEST", "email@email.ru", "password", Role.ROLE_USER);
     }
 
     public static void assertMatch(User actual, User expected) {

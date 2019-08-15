@@ -1,5 +1,6 @@
 package rzd.zrw.upor.service;
 
+import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
@@ -17,4 +18,6 @@ public interface UserService {
     void update(User user, int userID);
 
     List<User> getAll();
+
+    List<User> getAllByDepartment(Department department);
 }

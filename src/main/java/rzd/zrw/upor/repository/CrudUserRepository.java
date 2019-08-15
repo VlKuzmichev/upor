@@ -31,7 +31,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Query("SELECT u FROM User u WHERE u.department=:department")
-    List<User> findAllByDepartment(Department department);
+    List<User> findAllByDepartment(@Param("department") Department department);
 
     User getByEmail(String email);
 }
