@@ -1,5 +1,6 @@
 package rzd.zrw.upor.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import rzd.zrw.upor.model.User;

@@ -1,6 +1,8 @@
 package rzd.zrw.upor.model;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
@@ -15,6 +17,8 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
+// Cache using if necessarily
+// @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"department_id", "email"},
         name = "users_unique_department_email_idx")})
@@ -45,12 +49,16 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private Date registered = new Date();
 
+    // Cache using if necessarily
+    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Department department;
 
+    // Cache using if necessarily
+    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")

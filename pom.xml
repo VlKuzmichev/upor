@@ -139,6 +139,13 @@
             <version>${hibernate-validator.version}</version>
         </dependency>
 
+        <!--         Cache using if necessarily
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-jcache</artifactId>
+                    <version>${hibernate.version}</version>
+                </dependency> -->
+
         <!--http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el-->
         <dependency>
             <groupId>org.glassfish</groupId>
