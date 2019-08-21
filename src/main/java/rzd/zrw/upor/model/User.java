@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
-// Cache using if necessarily
+// Cache using if necessary
 // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"department_id", "email"},
@@ -49,7 +49,7 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private Date registered = new Date();
 
-    // Cache using if necessarily
+    // Cache using if necessary
     //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", nullable = false)
@@ -57,7 +57,7 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private Department department;
 
-    // Cache using if necessarily
+    // Cache using if necessary
     //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))

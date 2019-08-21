@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.repository.DepartmentRepository;
 import rzd.zrw.upor.repository.UserRepository;
@@ -36,13 +35,13 @@ public class UserServiceImpl implements UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+    public void delete(int id, int departmentId) throws NotFoundException {
+        checkNotFoundWithId(repository.delete(id, departmentId), id);
     }
 
     @Override
-    public User get(int id) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id), id);
+    public User get(int id, int departmentId) throws NotFoundException {
+        return checkNotFoundWithId(repository.get(id, departmentId), id);
     }
 
     @Override
@@ -65,9 +64,15 @@ public class UserServiceImpl implements UserService {
         return repository.getAll();
     }
 
+    @Cacheable("users")
     @Override
-    public User getWithDepartment(int id, int departmentId){
-        return repository.getWithDepartment(id, departmentId);
+    public List<User> getAllByDepartment(int departmentId) {
+        return repository.getAllByDepartment(departmentId);
+    }
+
+    @Override
+    public User getWithDepartment(int id, int departmentId) throws NotFoundException {
+        return checkNotFoundWithId(repository.getWithDepartment(id, departmentId), id);
     }
 
 }

@@ -41,7 +41,7 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                        value="${hibernate.use_sql_comments}"/>
                 <!--https://github.com/hibernate/hibernate-orm/blob/master/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc#caching-provider-jcache-->
-             <!-- Using Hibernate cache if necessarily
+             <!-- Using Hibernate cache if necessary
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}"
                        value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
                 <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}"
@@ -55,13 +55,14 @@
 
     <context:component-scan base-package="rzd.zrw.**.repository"/>
     <context:component-scan base-package="rzd.zrw.**.service"/>
+    <context:component-scan base-package="rzd.zrw.**.web"/>
     <jpa:repositories base-package="rzd.zrw.**.repository"/>
 
     <tx:annotation-driven/>
     <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
-    <!-- For Tests with Hibernate Cache, using if necessarily
+    <!-- For Tests with Hibernate Cache, using if necessary
     <bean class="rzd.zrw.upor.repository.JpaUtil"/>  -->
 
 </beans>

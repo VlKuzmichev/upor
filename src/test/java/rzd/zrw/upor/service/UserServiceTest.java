@@ -1,8 +1,8 @@
 package rzd.zrw.upor.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
+import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
@@ -14,13 +14,13 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGet() throws Exception {
-        User user = service.get(USER_ID);
+        User user = service.get(USER_ID, DEPART_ID);
         assertMatch(user, USER);
     }
 
     @Test(expected = NotFoundException.class)
     public void testGetNotFound() throws Exception {
-        User user = service.get(1);
+        User user = service.get(1, DEPART_ID);
     }
 
     @Test
@@ -33,13 +33,13 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(USER_ID + 1);
+        service.delete(USER_ID + 1, DEPART_ID);
         assertMatch(service.getAll(), ADMIN, USER);
     }
 
     @Test(expected = NotFoundException.class)
     public void testDeleteNotFound() throws Exception {
-        service.delete(5);
+        service.delete(5, DEPART_ID);
     }
 
     @Test
@@ -55,7 +55,8 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test(expected = DataAccessException.class)
     public void testDuplicateMailCreate() throws Exception {
-        service.create(USER, USER_ID);
+        service.create(new User(null, "Duplicate", "Ivanov Ivan Ivanovich", "usersv@yandex.ru",
+                "newPass", Role.ROLE_USER), DEPART_ID);
     }
 
     @Test
@@ -63,7 +64,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User updated = new User(USER);
         updated.setFullName("Updated User Userovich");
         service.update(updated, DEPART_ID);
-        assertMatch(service.get(USER_ID), updated);
+        assertMatch(service.get(USER_ID, DEPART_ID), updated);
     }
 
     @Test
@@ -78,7 +79,7 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(user, USER);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = NotFoundException.class)
     public void testGetWithDepartmentNotFound() throws Exception {
         User user = service.getWithDepartment(USER_ID, 100000);
         assertMatch(user, USER);

@@ -1,6 +1,5 @@
 package rzd.zrw.upor.service;
 
-import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
@@ -9,15 +8,17 @@ import java.util.List;
 public interface UserService {
     public User create(User user, int departmentId);
 
-    void delete(int id) throws NotFoundException;
+    void delete(int id, int departmentId) throws NotFoundException;
 
-    User get(int id) throws NotFoundException;
+    User get(int id, int departmentId) throws NotFoundException;
 
     User getByEmail(String email) throws NotFoundException;
 
-    void update(User user, int userID);
+    void update(User user, int departmentId);
 
     List<User> getAll();
 
-    User getWithDepartment(int id, int departmentId);
+    List<User> getAllByDepartment(int departmentId);
+
+    User getWithDepartment(int id, int departmentId) throws NotFoundException;
 }

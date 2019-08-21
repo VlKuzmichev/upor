@@ -3,7 +3,6 @@ package rzd.zrw.upor.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.User;
 
 import java.util.List;
@@ -19,19 +18,22 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     private CrudDepartmentRepository crudDepartmentRepository;
 
     @Override
-    public User save(User user, int departmentID) {
-        user.setDepartment(crudDepartmentRepository.getOne(departmentID));
+    public User save(User user, int departmentId) {
+        if (!user.isNew() && get(user.getId(), departmentId) == null) {
+            return null;
+        }
+        user.setDepartment(crudDepartmentRepository.getOne(departmentId));
         return crudUserRepository.save(user);
     }
 
     @Override
-    public boolean delete(int id) {
-        return crudUserRepository.delete(id) != 0;
+    public boolean delete(int id, int departmentId) {
+        return crudUserRepository.delete(id, departmentId) != 0;
     }
 
     @Override
-    public User get(int id) {
-        return crudUserRepository.findById(id).orElse(null);
+    public User get(int id, int departmentId) {
+        return crudUserRepository.findById(id).filter(user -> user.getDepartment().getId() == departmentId).orElse(null);
     }
 
     @Override
@@ -42,6 +44,11 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         return crudUserRepository.findAll(SORT_NAME_EMAIL);
+    }
+
+    @Override
+    public List<User> getAllByDepartment(int departmentId) {
+        return crudUserRepository.getAllByDepartment(departmentId);
     }
 
     @Override
