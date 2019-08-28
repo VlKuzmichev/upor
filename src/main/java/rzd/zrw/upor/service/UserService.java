@@ -6,15 +6,15 @@ import rzd.zrw.upor.util.exception.NotFoundException;
 import java.util.List;
 
 public interface UserService {
-    public User create(User user, int departmentId);
+    public User create(User user);
 
-    void delete(int id, int departmentId) throws NotFoundException;
+    void delete(int id) throws NotFoundException;
 
-    User get(int id, int departmentId) throws NotFoundException;
+    User get(int id) throws NotFoundException;
 
     User getByEmail(String email) throws NotFoundException;
 
-    void update(User user, int departmentId);
+    void update(User user, int id);
 
     List<User> getAll();
 

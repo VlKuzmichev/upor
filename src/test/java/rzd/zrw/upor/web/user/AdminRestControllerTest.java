@@ -29,16 +29,15 @@ public class AdminRestControllerTest {
 
     @Test
     void delete() throws Exception {
-        controller.delete(UserTestData.USER_ID, 100003);
+        controller.delete(UserTestData.USER_ID);
         Collection<User> users = controller.getAll();
         assertEquals(users.size(), 2);
         assertEquals(users.iterator().next(), ADMIN);
     }
 
-//    @Test(expected = NotFoundException.class)
     @Test
     void deleteNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-        controller.delete(10, 100003));
+        controller.delete(10));
     }
 }

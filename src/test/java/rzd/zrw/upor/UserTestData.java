@@ -23,7 +23,9 @@ public class UserTestData {
             "admin@gmail.com", "admin", Role.ROLE_ADMIN);
 
     public static User getCreated() {
-        return new User(null, "newUser", "TEST TEST TEST", "email@email.ru", "password", Role.ROLE_USER);
+        User user = new User(null, "newUser", "TEST TEST TEST", "email@email.ru", "password", Role.ROLE_USER);
+        user.setDepartment(DEPARTMENT);
+        return user;
     }
 
     public static void assertMatch(User actual, User expected) {

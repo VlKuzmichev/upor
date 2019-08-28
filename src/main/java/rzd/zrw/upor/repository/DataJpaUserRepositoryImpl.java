@@ -18,22 +18,18 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     private CrudDepartmentRepository crudDepartmentRepository;
 
     @Override
-    public User save(User user, int departmentId) {
-        if (!user.isNew() && get(user.getId(), departmentId) == null) {
-            return null;
-        }
-        user.setDepartment(crudDepartmentRepository.getOne(departmentId));
+    public User save(User user) {
         return crudUserRepository.save(user);
     }
 
     @Override
-    public boolean delete(int id, int departmentId) {
-        return crudUserRepository.delete(id, departmentId) != 0;
+    public boolean delete(int id) {
+        return crudUserRepository.delete(id) != 0;
     }
 
     @Override
-    public User get(int id, int departmentId) {
-        return crudUserRepository.findById(id).filter(user -> user.getDepartment().getId() == departmentId).orElse(null);
+    public User get(int id) {
+        return crudUserRepository.findById(id).orElse(null);
     }
 
     @Override

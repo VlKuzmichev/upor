@@ -1,7 +1,9 @@
 package rzd.zrw.upor.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.UserService;
 
@@ -10,12 +12,16 @@ import java.util.List;
 import static rzd.zrw.upor.util.ValidationUtil.assureIdConsistent;
 import static rzd.zrw.upor.util.ValidationUtil.checkNew;
 
-@Controller
+@RestController
+@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
+
+    public static final String REST_URL = "/rest/admin/users";
 
     @Autowired
     private UserService service;
 
+    @GetMapping
     public List<User> getAll() {
         return service.getAll();
     }
@@ -24,22 +30,27 @@ public class AdminRestController {
         return service.getAllByDepartment(departmentId);
     }
 
-    public User get(int id, int departmentId) {
-        return service.get(id, departmentId);
+    @GetMapping("/{id}")
+    public User get(int id) {
+        return service.get(id);
     }
 
     public User create(User user, int departmentId) {
         checkNew(user);
-        return service.create(user, departmentId);
+        return service.create(user);
     }
 
-    public void delete(int id, int departmentId) {
-        service.delete(id, departmentId);
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(int id) {
+        service.delete(id);
     }
 
-    public void update(User user, int departmentId) {
-        assureIdConsistent(user, departmentId);
-        service.update(user, departmentId);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody User user, @PathVariable int id) {
+        assureIdConsistent(user, id);
+        service.update(user, id);
     }
 
     public User getByMail(String email) {

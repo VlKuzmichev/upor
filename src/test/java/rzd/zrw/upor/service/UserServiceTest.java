@@ -15,21 +15,21 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     void testGet() throws Exception {
-        User user = service.get(USER_ID, DEPART_ID);
+        User user = service.get(USER_ID);
         assertMatch(user, USER);
     }
 
     @Test
     void testGetNotFound() throws Exception {
         assertThrows(NotFoundException.class, () -> {
-            User user = service.get(1, DEPART_ID);
+            User user = service.get(1);
         });
     }
 
     @Test
     void testCreate() throws Exception {
         User user = getCreated();
-        User created = service.create(user, DEPART_ID);
+        User created = service.create(user);
         user.setId(created.getId());
         assertMatch(service.getAll(), ADMIN, DISPATCHER, user, USER);
     }
@@ -42,14 +42,14 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     void testDelete() throws Exception {
-        service.delete(USER_ID + 1, DEPART_ID);
+        service.delete(USER_ID + 1);
         assertMatch(service.getAll(), ADMIN, USER);
     }
 
     @Test
     void testDeleteNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                service.delete(5, DEPART_ID));
+                service.delete(5));
     }
 
     @Test
@@ -58,7 +58,6 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(user, USER);
     }
 
-    //@Test(expected = NotFoundException.class)
     @Test
     void testGetByEmailNotFound() throws Exception {
         assertThrows(NotFoundException.class, () -> {
@@ -68,17 +67,21 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     void testDuplicateMailCreate() throws Exception {
-        assertThrows(DataIntegrityViolationException.class, () ->
-                service.create(new User(null, "Duplicate", "Ivanov Ivan Ivanovich", "usersv@yandex.ru",
-                        "newPass", Role.ROLE_USER), DEPART_ID));
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            User user = new User(null, "Duplicate", "Ivanov Ivan Ivanovich", "usersv@yandex.ru",
+                    "newPass", Role.ROLE_USER);
+            user.setDepartment(DEPARTMENT);
+            service.create(user);
+        });
     }
 
     @Test
     void testUpdate() throws Exception {
         User updated = new User(USER);
+        updated.setDepartment(DEPARTMENT);
         updated.setFullName("Updated User Userovich");
-        service.update(updated, DEPART_ID);
-        assertMatch(service.get(USER_ID, DEPART_ID), updated);
+        service.update(updated, USER_ID);
+        assertMatch(service.get(USER_ID), updated);
     }
 
     @Test

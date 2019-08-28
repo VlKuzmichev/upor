@@ -15,8 +15,8 @@ import java.util.Optional;
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
-    @Query("DELETE FROM User u WHERE u.id=:id AND u.department.id=:departmentId")
-    int delete(@Param("id") int id, @Param("departmentId") int departmentId);
+    @Query("DELETE FROM User u WHERE u.id=:id")
+    int delete(@Param("id") int id);
 
     @Override
     @Transactional

@@ -28,20 +28,20 @@ public class UserServiceImpl implements UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
-    public User create(User user, int departmentId) {
-        return repository.save(user, departmentId);
+    public User create(User user) {
+        return repository.save(user);
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
-    public void delete(int id, int departmentId) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id, departmentId), id);
+    public void delete(int id) throws NotFoundException {
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     @Override
-    public User get(int id, int departmentId) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id, departmentId), id);
+    public User get(int id) throws NotFoundException {
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(User user, int userId) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(repository.save(user, userId), user.getId());
+        checkNotFoundWithId(repository.save(user), user.getId());
     }
 
     @Cacheable("users")
