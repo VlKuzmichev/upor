@@ -1,43 +1,25 @@
 package rzd.zrw.upor.web.user;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import rzd.zrw.upor.UserTestData;
-import rzd.zrw.upor.model.User;
-import rzd.zrw.upor.util.exception.NotFoundException;
+import org.springframework.http.MediaType;
+import rzd.zrw.upor.web.AbstractControllerTest;
 
-import java.util.Arrays;
-import java.util.Collection;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static rzd.zrw.upor.UserTestData.ADMIN_ID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static rzd.zrw.upor.UserTestData.ADMIN;
+class AdminRestControllerTest extends AbstractControllerTest {
 
-
-public class AdminRestControllerTest {
-    private static ConfigurableApplicationContext appCtx;
-    private static AdminRestController controller;
-
-    @BeforeEach
-    void beforeClass() {
-        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/controllers-context.xml");
-        System.out.println("\n" + Arrays.toString(appCtx.getBeanDefinitionNames()) + "\n");
-        controller = appCtx.getBean(AdminRestController.class);
-    }
+    private static final String REST_URL = AdminRestController.REST_URL + '/';
 
     @Test
-    void delete() throws Exception {
-        controller.delete(UserTestData.USER_ID);
-        Collection<User> users = controller.getAll();
-        assertEquals(users.size(), 2);
-        assertEquals(users.iterator().next(), ADMIN);
-    }
-
-    @Test
-    void deleteNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () ->
-        controller.delete(10));
+    void testGet() throws Exception {
+        mockMvc.perform(get(REST_URL + ADMIN_ID))
+                .andExpect(status().isOk())
+                .andDo(print())
+                // https://jira.spring.io/browse/SPR-14472
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 }

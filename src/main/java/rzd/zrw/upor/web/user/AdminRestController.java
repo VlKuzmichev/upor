@@ -3,10 +3,13 @@ package rzd.zrw.upor.web.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.UserService;
 
+import java.net.URI;
 import java.util.List;
 
 import static rzd.zrw.upor.util.ValidationUtil.assureIdConsistent;
@@ -26,18 +29,28 @@ public class AdminRestController {
         return service.getAll();
     }
 
-    public List<User> getAllByDepartment(int departmentId) {
+    @GetMapping("/bydepartment")
+    public List<User> getAllByDepartment(@RequestBody int departmentId) {
         return service.getAllByDepartment(departmentId);
     }
 
     @GetMapping("/{id}")
-    public User get(int id) {
+    public User get(@PathVariable int id) {
         return service.get(id);
     }
 
-    public User create(User user, int departmentId) {
+    public User create(User user) {
         checkNew(user);
         return service.create(user);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+        User created = create(user);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @DeleteMapping
@@ -53,7 +66,8 @@ public class AdminRestController {
         service.update(user, id);
     }
 
-    public User getByMail(String email) {
+    @GetMapping("/byemail")
+    public User getByMail(@RequestParam String email) {
         return service.getByEmail(email);
     }
 }

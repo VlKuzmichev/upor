@@ -20,6 +20,7 @@
         <!-- Spring -->
         <spring.version>5.1.5.RELEASE</spring.version>
         <spring-data-jpa.version>2.1.5.RELEASE</spring-data-jpa.version>
+        <jackson-json.version>2.9.8</jackson-json.version>
         <tomcat.version>8.5.11</tomcat.version>
 
 
@@ -187,6 +188,12 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
 
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-json.version}</version>
+        </dependency>
 
         <!--Test-->
         <dependency>

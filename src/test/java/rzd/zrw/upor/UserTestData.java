@@ -11,6 +11,7 @@ import java.util.List;
 
 public class UserTestData {
     public static final Integer USER_ID = 100004;
+    public static final Integer ADMIN_ID = 100006;
     public static final Integer DEPART_ID = 100003;
 
     public static final Department DEPARTMENT = new Department(DEPART_ID, "RCS3", "Full name rcs3");
@@ -19,7 +20,7 @@ public class UserTestData {
             "usersv@yandex.ru", "password", Role.ROLE_USER);
     public static final User DISPATCHER = new User(USER_ID + 1, "Disp", "Dispetcherov Disp Dispetcherovich",
             "disp@yandex.ru", "disp", Role.ROLE_DISPATCHER);
-    public static final User ADMIN = new User(USER_ID + 2, "Admin", "Adminovich Adminus Adminov",
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "Adminovich Adminus Adminov",
             "admin@gmail.com", "admin", Role.ROLE_ADMIN);
 
     public static User getCreated() {
