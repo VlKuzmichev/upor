@@ -56,7 +56,7 @@ public class User extends AbstractNamedEntity {
     @JoinColumn(name = "department_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    @JsonIgnore
+    //@JsonIgnore
     private Department department;
 
     // Cache using if necessary

@@ -1,4 +1,4 @@
-package rzd.zrw.upor.web.user;
+package rzd.zrw.upor.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
