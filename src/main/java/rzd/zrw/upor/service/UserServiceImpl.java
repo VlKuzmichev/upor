@@ -58,12 +58,14 @@ public class UserServiceImpl implements UserService {
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 
+    // Comment caching while testing
     @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.getAll();
     }
 
+    // Comment caching while testing
     @Cacheable("users")
     @Override
     public List<User> getAllByDepartment(int departmentId) {

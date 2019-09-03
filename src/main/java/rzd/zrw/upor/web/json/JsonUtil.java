@@ -1,12 +1,10 @@
 package rzd.zrw.upor.web.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import static rzd.zrw.upor.web.json.JacksonObjectMapper.getMapper;
 
@@ -37,11 +35,4 @@ public class JsonUtil {
         }
     }
 
-    public static <T> String writeIgnoreProps(T obj, String... ignoreProps) {
-        Map<String, Object> map = getMapper().convertValue(obj, new TypeReference<Map<String, Object>>() {});
-        for (String prop : ignoreProps) {
-            map.remove(prop);
-        }
-        return writeValue(map);
-    }
 }

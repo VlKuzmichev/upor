@@ -12,7 +12,6 @@ import rzd.zrw.upor.service.UserService;
 import java.net.URI;
 import java.util.List;
 
-import static rzd.zrw.upor.util.ValidationUtil.assureIdConsistent;
 import static rzd.zrw.upor.util.ValidationUtil.checkNew;
 
 @RestController
@@ -29,8 +28,8 @@ public class AdminRestController {
         return service.getAll();
     }
 
-    @GetMapping("/bydepartment")
-    public List<User> getAllByDepartment(@RequestBody int departmentId) {
+    @GetMapping("/department")
+    public List<User> getAllByDepartment(@RequestParam int departmentId) {
         return service.getAllByDepartment(departmentId);
     }
 
@@ -53,20 +52,19 @@ public class AdminRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(int id) {
+    public void delete(@PathVariable int id) {
         service.delete(id);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @PathVariable int id) {
-        assureIdConsistent(user, id);
         service.update(user, id);
     }
 
-    @GetMapping("/byemail")
+    @GetMapping("/by")
     public User getByMail(@RequestParam String email) {
         return service.getByEmail(email);
     }

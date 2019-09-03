@@ -38,6 +38,6 @@ public class AdminControllerTest {
     @Test
     void deleteNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-        controller.delete(10));
+                controller.delete(10));
     }
 }
