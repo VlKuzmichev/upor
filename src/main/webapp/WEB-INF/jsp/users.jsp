@@ -8,6 +8,7 @@
 <body>
 <script type="text/javascript" src="resources/js/upor.common.js" defer></script>
 <script type="text/javascript" src="resources/js/upor.users.js" defer></script>
+<script type="text/javascript" src="resources/js/upor.departments.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron pt-4">
@@ -40,7 +41,7 @@
                     <td><input type="checkbox"
                                <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/></td>
                     <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                    <td><a><span class="fa fa-pencil"></span></a></td>
+                    <td><a><span class="fa fa-pencil"></span> </a></td>
                     <td><a class="delete" id="${user.id}"><span class="fa fa-remove"></span></a></td>
                 </tr>
             </c:forEach>
@@ -65,9 +66,14 @@
                                placeholder="<spring:message code="user.name"/>">
                     </div>
                     <div class="form-group">
-                        <label for="fullname" class="col-form-label"><spring:message code="user.fullname"/></label>
-                        <input type="text" class="form-control" id="fullname" name="fullname"
+                        <label for="fullName" class="col-form-label"><spring:message code="user.fullname"/></label>
+                        <input type="text" class="form-control" id="fullName" name="fullName"
                                placeholder="<spring:message code="user.fullname"/>">
+                    </div>
+                    <div class="form-group">
+                        <label for="departmentId" class="col-form-label"><spring:message code="user.department"/></label>
+                        <select id="departmentId" name = "departmentId" class="form-control mx-0">
+                        </select>
                     </div>
 
                     <div class="form-group">

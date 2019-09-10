@@ -10,7 +10,7 @@ public class DeviceWire extends AbstractBaseEntity {
     private String defect;
     private String description;
     private String responsibleEmployees;
-    private Boolean status;
+    private Boolean status; // Enum  for many variety
 
     //    @NotNull
     private User user;

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
+import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
 
 import java.util.List;
@@ -15,32 +16,35 @@ import java.util.List;
 @RequestMapping("/ajax/admin/users")
 public class AdminUIController {
     @Autowired
-    private UserService service;
+    private UserService userService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
-        return service.getAll();
+        return userService.getAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
-        service.delete(id);
+        userService.delete(id);
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void createOrUpdate(@RequestParam("id") Integer id,
                                @RequestParam("name") String name,
-                               @RequestParam("fullname") String fullname,
+                               @RequestParam("fullName") String fullName,
+                               @RequestParam("departmentId") Integer departmentId,
                                @RequestParam("email") String email,
                                @RequestParam("password") String password) {
 
-        User user = new User(id, fullname, name, email, password, Role.ROLE_USER);
-        // Temporary hardcode because Department Entity isn't ready
-        user.setDepartment(new Department(100003,"RCS3","Full name rcs3"));
+        User user = new User(id, name, fullName, email, password, Role.ROLE_USER);
+        user.setDepartment(departmentService.get(departmentId));
         if (user.isNew()) {
-            service.create(user);
+            userService.create(user);
         }
     }
 }

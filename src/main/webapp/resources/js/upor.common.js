@@ -1,39 +1,58 @@
-function makeEditable() {
+let context, form;
+
+function makeEditable(ctx) {
+    context = ctx;
+    form = $('#detailsForm');
     $(".delete").click(function () {
-        deleteRow($(this).attr("id"));
+        if (confirm('Are you sure?')) {
+            deleteRow($(this).attr("id"));
+        }
     });
 }
 
 function add() {
-    $("#detailsForm").find(":input").val("");
+    form.find(":input").val("");
     $("#editRow").modal();
 }
 
 function deleteRow(id) {
     $.ajax({
-        url: ajaxUrl + id,
-        type: "DELETE",
-        success: function () {
-            updateTable();
+        url: context.ajaxUrl + id,
+        type: "DELETE"
+    }).done(function () {
+        updateTable();
+    });
+}
+
+function getDepartments() {
+    $.ajax({
+        url: 'ajax/admin/departments/',
+        type: 'GET',
+        data: 'name',
+        dataType: 'json',
+        success: function (json) {
+            $.each(json, function (i, value) {
+                $('#departmentId').append($('<option>').text(value.name)
+                    .attr('value', value.id));
+            });
         }
     });
 }
 
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.clear().rows.add(data).draw();
+    $.get(context.ajaxUrl, function (data) {
+        context.datatableApi.clear().rows.add(data).draw();
     });
 }
 
 function save() {
-    var form = $("#detailsForm");
+    debugger;
     $.ajax({
         type: "POST",
-        url: ajaxUrl,
-        data: form.serialize(),
-        success: function () {
-            $("#editRow").modal("hide");
-            updateTable();
-        }
+        url: context.ajaxUrl,
+        data: form.serialize()
+    }).done(function () {
+        $("#editRow").modal("hide");
+        updateTable();
     });
 }
