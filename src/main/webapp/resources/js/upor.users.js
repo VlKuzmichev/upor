@@ -39,14 +39,10 @@ $(function () {
                         "asc"
                     ]
                 ]
-            })
+            }),
+            updateTable: function () {
+                $.get("ajax/admin/users/", updateTableByData);
+            }
         }
     );
-    // $("#departments").css("background-color", "yellow");
-    // $("#departments").append("<option value=\"100001\">RCS1</option>");
-    // getDepartments({
-    //     // ajaxUrl: "ajax/admin/departments/",
-    //     // "columns" :[{"data" : "name"}]
-    // });
-
 });
