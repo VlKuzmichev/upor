@@ -77,4 +77,13 @@ public class UserServiceImpl implements UserService {
         return checkNotFoundWithId(repository.getWithDepartment(id, departmentId), id);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
+    @Override
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        repository.save(user);  // !! need only for JDBC implementation
+    }
+
 }

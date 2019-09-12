@@ -44,12 +44,10 @@ function getDepartments() {
 }
 
 function updateTableByData(data) {
-    debugger;
     context.datatableApi.clear().rows.add(data).draw();
 }
 
 function save() {
-    debugger;
     $.ajax({
         type: "POST",
         url: context.ajaxUrl,

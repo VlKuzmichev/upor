@@ -47,4 +47,10 @@ public class AdminUIController {
             userService.create(user);
         }
     }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void enable(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
+        userService.enable(id, enabled);
+    }
 }

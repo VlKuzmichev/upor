@@ -21,4 +21,6 @@ public interface UserService {
     List<User> getAllByDepartment(int departmentId);
 
     User getWithDepartment(int id, int departmentId) throws NotFoundException;
+
+    void enable(int id, boolean enable);
 }
