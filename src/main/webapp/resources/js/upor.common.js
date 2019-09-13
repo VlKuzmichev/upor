@@ -1,3 +1,5 @@
+const departmentAjaxUrl = "ajax/admin/departments/";
+
 let context, form;
 
 function makeEditable(ctx) {
@@ -13,8 +15,20 @@ function makeEditable(ctx) {
 
 function add() {
     form.find(":input").val("");
+    debugger;
+    $.ajax({
+        url: departmentAjaxUrl,
+        type: 'GET',
+        dataType: 'json'
+    }).done(function (json) {
+        $.each(json, function (i, value) {
+            $('#departmentId').append($('<option>').text(value.name)
+                .attr('value', value.id));
+        });
+    });
     $("#editRow").modal();
 }
+
 
 function deleteRow(id) {
     if (confirm('Are you sure?')) {
@@ -26,21 +40,6 @@ function deleteRow(id) {
             successNoty("Deleted");
         });
     }
-}
-
-function getDepartments() {
-    $.ajax({
-        url: 'ajax/admin/departments/',
-        type: 'GET',
-        data: 'name',
-        dataType: 'json',
-        success: function (json) {
-            $.each(json, function (i, value) {
-                $('#departmentId').append($('<option>').text(value.name)
-                    .attr('value', value.id));
-            });
-        }
-    });
 }
 
 function updateTableByData(data) {

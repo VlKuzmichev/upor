@@ -6,9 +6,9 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
+<%--<script type="text/javascript" src="resources/js/upor.departments.js" defer></script>--%>
 <script type="text/javascript" src="resources/js/upor.common.js" defer></script>
 <script type="text/javascript" src="resources/js/upor.users.js" defer></script>
-<script type="text/javascript" src="resources/js/upor.departments.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron pt-4">
