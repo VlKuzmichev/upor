@@ -152,6 +152,7 @@ public class User extends AbstractNamedEntity {
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
+                ", department=" + department.getId() +
                 '}';
     }
 }

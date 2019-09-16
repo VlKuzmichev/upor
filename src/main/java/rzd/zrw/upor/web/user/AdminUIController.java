@@ -9,6 +9,8 @@ import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
+import rzd.zrw.upor.to.UserTo;
+import rzd.zrw.upor.util.UserUtil;
 
 import java.util.List;
 
@@ -34,19 +36,14 @@ public class AdminUIController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam("id") Integer id,
-                               @RequestParam("name") String name,
-                               @RequestParam("fullName") String fullName,
-                               @RequestParam("departmentId") Integer departmentId,
-                               @RequestParam("email") String email,
-                               @RequestParam("password") String password) {
-
-        User user = new User(id, name, fullName, email, password, Role.ROLE_USER);
-        user.setDepartment(departmentService.get(departmentId));
-        if (user.isNew()) {
+    public void createOrUpdate(UserTo userTo) {
+        if (userTo.isNew()) {
+            User user = UserUtil.createNewFromTo(userTo);
+            user.setDepartment(departmentService.get(userTo.getDepartmentId()));
             userService.create(user);
         }
     }
+
 
     @PostMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
