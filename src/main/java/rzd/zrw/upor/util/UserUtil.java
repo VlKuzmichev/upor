@@ -9,4 +9,12 @@ public class UserUtil {
     public static User createNewFromTo(UserTo newUser) {
         return new User(null, newUser.getName(), newUser.getFullName(), newUser.getEmail().toLowerCase(), newUser.getPassword(), Role.ROLE_USER);
     }
+
+    public static User updateFromTo(User user, UserTo userTo) {
+        user.setName(userTo.getName());
+        user.setFullName(userTo.getFullName());
+        user.setEmail(userTo.getEmail().toLowerCase());
+        user.setPassword(userTo.getPassword());
+        return user;
+    }
 }

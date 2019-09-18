@@ -39,7 +39,7 @@ public class AdminRestController {
     }
 
     public User create(User user) {
-        checkNew(user);
+     //   checkNew(user);
         return service.create(user);
     }
 

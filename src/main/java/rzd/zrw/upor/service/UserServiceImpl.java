@@ -9,6 +9,8 @@ import org.springframework.util.Assert;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.repository.DepartmentRepository;
 import rzd.zrw.upor.repository.UserRepository;
+import rzd.zrw.upor.to.UserTo;
+import rzd.zrw.upor.util.UserUtil;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
 import java.util.List;
@@ -58,6 +60,14 @@ public class UserServiceImpl implements UserService {
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    @Override
+    public void update(UserTo userTo) {
+        User user = get(userTo.getId());
+        repository.save(UserUtil.updateFromTo(user, userTo));
+    }
+
     // Comment caching while testing
     @Cacheable("users")
     @Override
@@ -73,8 +83,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getWithDepartment(int id, int departmentId) throws NotFoundException {
-        return checkNotFoundWithId(repository.getWithDepartment(id, departmentId), id);
+    public User getWithDepartment(int id) throws NotFoundException {
+        return checkNotFoundWithId(repository.getWithDepartment(id), id);
     }
 
     @CacheEvict(value = "users", allEntries = true)

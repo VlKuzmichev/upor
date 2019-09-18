@@ -41,6 +41,9 @@ $(function () {
                     {
                         "data": "registered"
                     },
+                    // {
+                    //     "data": "departmentId"
+                    // },
                     {
                         "defaultContent": "Edit",
                         "orderable": false

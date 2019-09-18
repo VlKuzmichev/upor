@@ -48,7 +48,7 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getWithDepartment(int id, int departmentId) {
-        return crudUserRepository.getWithDepartment(id, departmentId);
+    public User getWithDepartment(int id) {
+        return crudUserRepository.getWithDepartment(id);
     }
 }

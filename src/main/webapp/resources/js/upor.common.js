@@ -15,7 +15,7 @@ function makeEditable(ctx) {
 
 function add() {
     form.find(":input").val("");
-    debugger;
+    $('#departmentId').find('option').remove();
     $.ajax({
         url: departmentAjaxUrl,
         type: 'GET',
@@ -40,6 +40,37 @@ function deleteRow(id) {
             successNoty("Deleted");
         });
     }
+}
+
+function updateRow(id) {
+    var id;
+    $('#departmentId').find('option').remove();
+    $.get(context.ajaxUrl + id, function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value)
+            if (key == "department"){
+                id = value.id;
+            }
+        });
+        $.ajax({
+            url: departmentAjaxUrl,
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (json) {
+            $.each(json, function (i, value) {
+                debugger;
+                //form.find('selected').remove('selected');
+                if (value.id == id) {
+                    $('#departmentId').append($('<option>').text(value.name)
+                        .attr('value', value.id).attr("selected", "selected"));
+                }else{
+                    $('#departmentId').append($('<option>').text(value.name)
+                        .attr('value', value.id));
+                }
+            });
+        });
+        $('#editRow').modal();
+    });
 }
 
 function updateTableByData(data) {

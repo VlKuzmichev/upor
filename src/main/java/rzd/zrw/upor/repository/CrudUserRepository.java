@@ -31,8 +31,8 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Override
     List<User> findAll(Sort sort);
 
-    @Query("SELECT u FROM User u JOIN FETCH u.department WHERE u.id =:id AND u.department.id =:departmentId")
-    User getWithDepartment(@Param("id") int id, @Param("departmentId") int departmentId);
+    @Query("SELECT u FROM User u JOIN FETCH u.department WHERE u.id =:id")
+    User getWithDepartment(@Param("id") int id);
 
     User getByEmail(String email);
 }

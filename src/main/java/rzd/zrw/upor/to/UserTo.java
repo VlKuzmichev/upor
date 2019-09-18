@@ -1,8 +1,9 @@
 package rzd.zrw.upor.to;
 
+import rzd.zrw.upor.HasId;
 import rzd.zrw.upor.model.Department;
 
-public class UserTo {
+public class UserTo implements HasId {
     private Integer id;
 
     private String name;
@@ -15,8 +16,11 @@ public class UserTo {
 
     private Integer departmentId;
 
-
     public UserTo() {
+    }
+
+    public UserTo(Integer id) {
+        this.id = id;
     }
 
     public UserTo(Integer id, String name, String fullName, String email, String password, Integer departmentId) {
@@ -27,11 +31,12 @@ public class UserTo {
         this.password = password;
         this.departmentId = departmentId;
     }
-
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
@@ -68,6 +73,7 @@ public class UserTo {
         this.email = email;
     }
 
+    @Override
     public boolean isNew() {
         return id == null;
     }

@@ -21,5 +21,6 @@ public interface UserRepository {
 
     List<User> getAllByDepartment(int departmentId);
 
-    User getWithDepartment(int id, int departmentId);
+//    User getWithDepartment(int id, int departmentId);
+    User getWithDepartment(int id);
 }

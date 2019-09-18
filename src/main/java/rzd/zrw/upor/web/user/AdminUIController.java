@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import rzd.zrw.upor.model.Department;
-import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
@@ -28,6 +26,11 @@ public class AdminUIController {
         return userService.getAll();
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User get(@PathVariable("id") int id) {
+        return userService.getWithDepartment(id);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
@@ -41,6 +44,8 @@ public class AdminUIController {
             User user = UserUtil.createNewFromTo(userTo);
             user.setDepartment(departmentService.get(userTo.getDepartmentId()));
             userService.create(user);
+        }else {
+            userService.update(userTo);
         }
     }
 
