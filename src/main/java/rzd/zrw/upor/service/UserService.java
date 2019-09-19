@@ -1,7 +1,6 @@
 package rzd.zrw.upor.service;
 
 import rzd.zrw.upor.model.User;
-import rzd.zrw.upor.to.UserTo;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public interface UserService {
 
     void update(User user, int id);
 
-    void update(UserTo user);
+    void update(User user);
 
     List<User> getAll();
 

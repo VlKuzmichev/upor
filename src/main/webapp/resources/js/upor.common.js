@@ -58,8 +58,8 @@ function updateRow(id) {
             dataType: 'json'
         }).done(function (json) {
             $.each(json, function (i, value) {
-                debugger;
-                //form.find('selected').remove('selected');
+                //debugger;
+                form.find('selected').remove('selected');
                 if (value.id == id) {
                     $('#departmentId').append($('<option>').text(value.name)
                         .attr('value', value.id).attr("selected", "selected"));

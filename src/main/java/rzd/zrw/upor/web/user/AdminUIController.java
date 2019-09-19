@@ -44,11 +44,13 @@ public class AdminUIController {
             User user = UserUtil.createNewFromTo(userTo);
             user.setDepartment(departmentService.get(userTo.getDepartmentId()));
             userService.create(user);
-        }else {
-            userService.update(userTo);
+        } else {
+            User user = userService.get(userTo.getId());
+            User updatedUser = UserUtil.updateFromTo(user, userTo);
+            updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
+            userService.update(updatedUser);
         }
     }
-
 
     @PostMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
