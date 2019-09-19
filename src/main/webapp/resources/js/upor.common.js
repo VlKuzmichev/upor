@@ -58,7 +58,6 @@ function updateRow(id) {
             dataType: 'json'
         }).done(function (json) {
             $.each(json, function (i, value) {
-                //debugger;
                 form.find('selected').remove('selected');
                 if (value.id == id) {
                     $('#departmentId').append($('<option>').text(value.name)
@@ -111,7 +110,7 @@ function successNoty(text) {
 function failNoty(jqXHR) {
     closeNoty();
     failedNote = new Noty({
-        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status,
+        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;Error status: " + jqXHR.status + (jqXHR.responseJSON ? "<br>" + jqXHR.responseJSON : ""),
         type: "error",
         layout: "bottomRight"
     }).show();

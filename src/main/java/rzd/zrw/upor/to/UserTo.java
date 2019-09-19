@@ -1,17 +1,26 @@
 package rzd.zrw.upor.to;
 
 import rzd.zrw.upor.HasId;
-import rzd.zrw.upor.model.Department;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class UserTo implements HasId {
     private Integer id;
 
+    @NotBlank
+    @Size(min = 2, max = 100)
     private String name;
 
     private String fullName;
 
+    @Email
+    @NotBlank
+    @Size(max = 100)
     private String email;
 
+    @Size(min = 5, max = 32, message = "length must between 5 and 32 characters")
     private String password;
 
     private Integer departmentId;
