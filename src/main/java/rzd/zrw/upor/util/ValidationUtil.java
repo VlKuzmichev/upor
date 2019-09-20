@@ -1,9 +1,7 @@
 package rzd.zrw.upor.util;
 
 
-//import rzd.zrw.upor.HasId;
 import rzd.zrw.upor.HasId;
-import rzd.zrw.upor.model.AbstractBaseEntity;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
 public class ValidationUtil {
