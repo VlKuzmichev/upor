@@ -14,6 +14,7 @@ function makeEditable(ctx) {
 }
 
 function add() {
+    $("#modalTitle").html(i18n["addTitle"]);
     form.find(":input").val("");
     $('#departmentId').find('option').remove();
     $.ajax({
@@ -31,24 +32,25 @@ function add() {
 
 
 function deleteRow(id) {
-    if (confirm('Are you sure?')) {
+    if (confirm(i18n['common.confirm'])) {
         $.ajax({
             url: context.ajaxUrl + id,
             type: "DELETE"
         }).done(function () {
             context.updateTable();
-            successNoty("Deleted");
+            successNoty("common.deleted");
         });
     }
 }
 
 function updateRow(id) {
     var id;
+    $("#modalTitle").html(i18n["editTitle"]);
     $('#departmentId').find('option').remove();
     $.get(context.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value)
-            if (key == "department"){
+            if (key === "department"){
                 id = value.id;
             }
         });
@@ -59,7 +61,7 @@ function updateRow(id) {
         }).done(function (json) {
             $.each(json, function (i, value) {
                 form.find('selected').remove('selected');
-                if (value.id == id) {
+                if (value.id === id) {
                     $('#departmentId').append($('<option>').text(value.name)
                         .attr('value', value.id).attr("selected", "selected"));
                 }else{
@@ -84,7 +86,7 @@ function save() {
     }).done(function () {
         $("#editRow").modal("hide");
         context.updateTable();
-        successNoty("Saved");
+        successNoty("common.saved");
     });
 }
 
@@ -97,10 +99,10 @@ function closeNoty() {
     }
 }
 
-function successNoty(text) {
+function successNoty(key) {
     closeNoty();
     new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + text,
+        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + i18n[key],
         type: 'success',
         layout: "bottomRight",
         timeout: 1000

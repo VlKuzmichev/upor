@@ -22,7 +22,7 @@
             <thead>
             <tr>
                 <th><spring:message code="user.name"/></th>
-                <th><spring:message code="user.fullname"/></th>
+                <th><spring:message code="user.fullName"/></th>
                 <th><spring:message code="user.email"/></th>
                 <th><spring:message code="user.roles"/></th>
                 <th><spring:message code="user.active"/></th>
@@ -39,7 +39,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><spring:message code="user.add"/></h4>
+                <h4 class="modal-title" id="modalTitle"></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -52,9 +52,9 @@
                                placeholder="<spring:message code="user.name"/>">
                     </div>
                     <div class="form-group">
-                        <label for="fullName" class="col-form-label"><spring:message code="user.fullname"/></label>
+                        <label for="fullName" class="col-form-label"><spring:message code="user.fullName"/></label>
                         <input type="text" class="form-control" id="fullName" name="fullName"
-                               placeholder="<spring:message code="user.fullname"/>">
+                               placeholder="<spring:message code="user.fullName"/>">
                     </div>
                     <div class="form-group">
                         <label for="departmentId" class="col-form-label"><spring:message code="user.department"/></label>
@@ -90,4 +90,13 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
+<script type="text/javascript">
+    const i18n = [];
+    i18n["addTitle"] = '<spring:message code="user.add"/>';
+    i18n["editTitle"] = '<spring:message code="user.edit"/>';
+
+    <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus","common.confirm"}%>'>
+    i18n["${key}"] = "<spring:message code="${key}"/>";
+    </c:forEach>
+</script>
 </html>
