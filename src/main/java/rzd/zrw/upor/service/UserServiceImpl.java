@@ -3,9 +3,12 @@ package rzd.zrw.upor.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import rzd.zrw.upor.AuthorizedUser;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.repository.DepartmentRepository;
 import rzd.zrw.upor.repository.UserRepository;
@@ -16,8 +19,8 @@ import java.util.List;
 import static rzd.zrw.upor.util.ValidationUtil.checkNotFound;
 import static rzd.zrw.upor.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userService")
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository repository;
@@ -92,5 +95,15 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(enabled);
         repository.save(user);  // !! need only for JDBC implementation
     }
+
+    @Override
+    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
+    }
+
 
 }
