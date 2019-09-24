@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<nav class="navbar navbar-dark bg-dark py-0">
+<nav class="navbar navbar-black bg-black py-0">
     <div class="container">
         <a href="main" class="navbar-brand"><%-- <img src="resources/images/icon-main.png"> --%>
             <spring:message code="app.title"/></a>
