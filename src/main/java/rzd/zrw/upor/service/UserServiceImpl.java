@@ -2,7 +2,6 @@ package rzd.zrw.upor.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -68,15 +67,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         repository.save(user);
     }
 
-    // Comment caching while testing
-    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.getAll();
     }
 
-    // Comment caching while testing
-    @Cacheable("users")
     @Override
     public List<User> getAllByDepartment(int departmentId) {
         return repository.getAllByDepartment(departmentId);

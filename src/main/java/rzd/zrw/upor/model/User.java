@@ -1,5 +1,6 @@
 package rzd.zrw.upor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -15,8 +16,6 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
-// Cache using if necessary
-// @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"department_id", "email"},
         name = "users_unique_department_email_idx")})
@@ -47,8 +46,6 @@ public class User extends AbstractNamedEntity {
     @NotNull
     private Date registered = new Date();
 
-    // Cache using if necessary
-    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -56,8 +53,6 @@ public class User extends AbstractNamedEntity {
     //@JsonIgnore
     private Department department;
 
-    // Cache using if necessary
-    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -152,7 +147,6 @@ public class User extends AbstractNamedEntity {
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
-                ", department=" + department.getId() +
                 '}';
     }
 }

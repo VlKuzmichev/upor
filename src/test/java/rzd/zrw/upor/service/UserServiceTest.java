@@ -6,6 +6,9 @@ import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,9 +31,12 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     void testCreate() throws Exception {
+//        User user = new User(null, "newUser", "TEST TEST TEST", "email@email.ru", "password", false, new Date(), Collections.singleton(Role.ROLE_USER));
+//        user.setDepartment(DEPARTMENT);
         User user = getCreated();
         User created = service.create(user);
         user.setId(created.getId());
+        assertMatch(user, created);
         assertMatch(service.getAll(), ADMIN, DISPATCHER, user, USER);
     }
 
@@ -93,8 +99,17 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void testGetWithDepartmentNotFound() throws Exception {
         assertThrows(NotFoundException.class, () -> {
-            User user = service.getWithDepartment(USER_ID);
+            User user = service.getWithDepartment(USER_ID+100);
             assertMatch(user, USER);
         });
+    }
+
+    @Test
+    void testValidation() throws Exception {
+        validateRootCause(() -> service.create(new User(null, "  ", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "password", true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "password", true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
     }
 }
