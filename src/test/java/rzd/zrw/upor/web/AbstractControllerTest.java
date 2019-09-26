@@ -1,6 +1,7 @@
 package rzd.zrw.upor.web;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -10,6 +11,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import rzd.zrw.upor.TimingExtension;
 import rzd.zrw.upor.repository.JpaUtil;
 import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
@@ -24,6 +26,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 })
 @WebAppConfiguration
 @Transactional
+@ExtendWith(TimingExtension.class)
 abstract public class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
