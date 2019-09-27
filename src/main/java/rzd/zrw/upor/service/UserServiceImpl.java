@@ -24,9 +24,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository repository;
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
-
     @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional

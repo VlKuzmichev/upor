@@ -11,6 +11,7 @@ import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
 import rzd.zrw.upor.to.UserTo;
 import rzd.zrw.upor.util.UserUtil;
+import rzd.zrw.upor.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,13 +32,13 @@ public class AdminUIController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@PathVariable("id") int id) {
+    public User get(@PathVariable int id) {
         return userService.getWithDepartment(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable int id) {
         userService.delete(id);
     }
 
@@ -59,18 +60,7 @@ public class AdminUIController {
     @PostMapping
     public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
         if (result.hasErrors()) {
-            StringJoiner joiner = new StringJoiner("<br>");
-            result.getFieldErrors().forEach(
-                    fe -> {
-                        String msg = fe.getDefaultMessage();
-                        if (msg != null) {
-                            if (!msg.startsWith(fe.getField())) {
-                                msg = fe.getField() + ' ' + msg;
-                            }
-                            joiner.add(msg);
-                        }
-                    });
-            return ResponseEntity.unprocessableEntity().body(joiner.toString());
+            return ValidationUtil.getErrorResponse(result);
         }
         if (userTo.isNew()) {
             User user = UserUtil.createNewFromTo(userTo);
@@ -87,7 +77,7 @@ public class AdminUIController {
 
     @PostMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void enable(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
+    public void enable(@PathVariable int id, @RequestParam boolean enabled) {
         userService.enable(id, enabled);
     }
 }
