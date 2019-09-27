@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html lang="ru">
 <head>
@@ -17,8 +18,8 @@
 <form class="form-signin" id="login_form" action="spring_security_check" method="post">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Пожалуйста, авторизуйтесь</h1>
-    <input class="form-control" id="Email" type="text" placeholder="Email" name="username" >
-    <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="password" >
+    <input class="form-control" id="Email" type="text" placeholder="Email" name="username">
+    <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="password">
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> Запомнить меня
@@ -33,17 +34,19 @@
         <div class="message"><spring:message code="${param.message}"/></div>
     </c:if>
     <br/>
-    <p>
-        <button type="submit" class="btn btn-lg btn-primary" onclick="login('usersv@yandex.ru', 'password')">
-            <spring:message code="app.login"/> User
-        </button>
-        <button type="submit" class="btn btn-lg btn-primary" onclick="login('disp@yandex.ru', 'dispet')">
-            <spring:message code="app.login"/> Disp
-        </button>
-        <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'admin')">
-            <spring:message code="app.login"/> Admin
-        </button>
-    </p>
+    <sec:authorize access="isAnonymous()">
+        <p>
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('usersv@yandex.ru', 'password')">
+                <spring:message code="app.login"/> User
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('disp@yandex.ru', 'dispet')">
+                <spring:message code="app.login"/> Disp
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'admin')">
+                <spring:message code="app.login"/> Admin
+            </button>
+        </p>
+    </sec:authorize>
     <br/>
 </form>
 
