@@ -5,6 +5,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
+import rzd.zrw.upor.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -49,7 +50,7 @@ public class User extends AbstractNamedEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+    @NotNull(groups = View.Persist.class)
     //@JsonIgnore
     private Department department;
 
