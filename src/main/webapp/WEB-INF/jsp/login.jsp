@@ -20,11 +20,11 @@
     <h1 class="h3 mb-3 font-weight-normal">Пожалуйста, авторизуйтесь</h1>
     <input class="form-control" id="Email" type="text" placeholder="Email" name="username">
     <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="password">
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Запомнить меня
-        </label>
-    </div>
+<%--    <div class="checkbox mb-3">--%>
+<%--        <label>--%>
+<%--            <input type="checkbox" value="remember-me"> Запомнить меня--%>
+<%--        </label>--%>
+<%--    </div>--%>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
     <c:if test="${param.error}">
