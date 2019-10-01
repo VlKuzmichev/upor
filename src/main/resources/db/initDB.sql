@@ -27,7 +27,7 @@ CREATE TABLE users
   department_id    INTEGER                 NOT NULL,
   FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX users_unique_department_email_idx ON users (department_id, email);
+CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE user_roles
 (

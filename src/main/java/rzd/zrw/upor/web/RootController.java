@@ -1,13 +1,31 @@
 package rzd.zrw.upor.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.support.SessionStatus;
+import rzd.zrw.upor.model.User;
+import rzd.zrw.upor.service.DepartmentService;
+import rzd.zrw.upor.service.UserService;
+import rzd.zrw.upor.to.UserTo;
+import rzd.zrw.upor.util.UserUtil;
+import rzd.zrw.upor.web.user.AbstractUserController;
+
+import javax.validation.Valid;
 
 
 @Controller
 public class RootController {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @GetMapping("/")
     public String root() {
@@ -25,4 +43,28 @@ public class RootController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
+
+    @PostMapping("/profile")
+    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+        if (result.hasErrors()) {
+            return "profile";
+        } else {
+            User user = userService.getWithDepartment(SecurityUtil.authUserId());
+            User updatedUser = UserUtil.updateFromTo(user, userTo);
+            //updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
+         //   userService.update(updatedUser);
+
+            userService.update(updatedUser, SecurityUtil.authUserId());
+            SecurityUtil.get().update(userTo);
+            status.setComplete();
+            return "redirect:users";
+//            return "redirect:logout";
+        }
+    }
+
 }
