@@ -1,6 +1,7 @@
 package rzd.zrw.upor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -20,7 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"},
         name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity{
 
     @Column(name = "full_name")
     @Size(max = 100)
@@ -36,6 +37,8 @@ public class User extends AbstractNamedEntity {
     @Column(name = "password", nullable = false)
     @NotBlank
     @Size(min = 5, max = 100)
+    // https://stackoverflow.com/a/12505165/548473
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
 
@@ -45,6 +48,7 @@ public class User extends AbstractNamedEntity {
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)

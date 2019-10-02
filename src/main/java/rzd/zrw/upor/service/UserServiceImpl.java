@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -16,20 +17,30 @@ import rzd.zrw.upor.util.exception.NotFoundException;
 
 import java.util.List;
 
+import static rzd.zrw.upor.util.UserUtil.prepareToSave;
+import static rzd.zrw.upor.util.UserUtil.updateFromTo;
 import static rzd.zrw.upor.util.ValidationUtil.checkNotFound;
 import static rzd.zrw.upor.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
     private UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @CacheEvict(value = "users", allEntries = true)
     @Override
     @Transactional
     public User create(User user) {
-        return repository.save(user);
+//        return repository.save(user);
+        Assert.notNull(user, "user must not be null");
+        return repository.save(prepareToSave(user, passwordEncoder));
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -55,14 +66,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public void update(User user, int userId) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(repository.save(user), user.getId());
+//        checkNotFoundWithId(repository.save(user), user.getId());
+        checkNotFoundWithId(repository.save(prepareToSave(user, passwordEncoder)), user.getId());
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     @Override
     public void update(User user) {
-        repository.save(user);
+//        repository.save(user);
+      //  User userser = updateFromTo(get(user.getId()), userTo);
+        repository.save(prepareToSave(user, passwordEncoder));
     }
 
 //    @Cacheable("users")

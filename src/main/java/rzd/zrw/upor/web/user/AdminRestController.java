@@ -12,6 +12,8 @@ import rzd.zrw.upor.service.UserService;
 import java.net.URI;
 import java.util.List;
 
+import static rzd.zrw.upor.util.ValidationUtil.checkNew;
+
 @RestController
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
@@ -37,7 +39,7 @@ public class AdminRestController {
     }
 
     public User create(User user) {
-     //   checkNew(user);
+        checkNew(user);
         return service.create(user);
     }
 

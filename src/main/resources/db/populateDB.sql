@@ -12,9 +12,9 @@ INSERT INTO departments (name, full_name) VALUES
 ('RCS3', 'Full name rcs3');
 
 INSERT INTO users (name, full_name, email, password, department_id) VALUES
-  ('User', 'Ivanov Ivan Ivanovich', 'usersv@yandex.ru', 'password', 100003),
-  ('Disp', 'Dispetcherov Disp Dispetcherovich', 'disp@yandex.ru', 'dispet', 100003),
-  ('Admin', 'Adminovich Adminus Adminov', 'admin@gmail.com', 'admin', 100003);
+  ('User', 'Ivanov Ivan Ivanovich', 'usersv@yandex.ru', '{noop}password', 100003),
+  ('Disp', 'Dispetcherov Disp Dispetcherovich', 'disp@yandex.ru', '{noop}dispet', 100003),
+  ('Admin', 'Adminovich Adminus Adminov', 'admin@gmail.com', '{noop}admin', 100003);
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100004),

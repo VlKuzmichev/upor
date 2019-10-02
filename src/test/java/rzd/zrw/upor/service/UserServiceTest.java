@@ -108,7 +108,7 @@ public class UserServiceTest extends AbstractServiceTest {
     void testValidation() throws Exception {
         validateRootCause(() -> service.create(new User(null, "  ", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "password", true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "Ivanov Ivan Ivanovich", "usersv@yandex.ru", "password", true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
     }

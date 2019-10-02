@@ -4,6 +4,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import rzd.zrw.upor.model.Department;
 import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
+import rzd.zrw.upor.web.json.JsonUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static rzd.zrw.upor.TestUtil.readFromJsonMvcResult;
@@ -33,7 +34,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "department");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "department", "password");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -41,7 +42,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "department").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "department", "password").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(User... expected) {
@@ -52,4 +53,7 @@ public class UserTestData {
         return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
     }
 
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
+    }
 }

@@ -81,6 +81,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void testDeleteNotFound() throws Exception {
         mockMvc.perform(delete(REST_URL + 1)
                 .with(userHttpBasic(ADMIN)))
+                //.andExpect(status().isNoContent())
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
     }
@@ -120,7 +121,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(expected)))
+                .content(jsonWithPassword(expected, "newPass")))
+               // .content(JsonUtil.writeValue(expected)))
                 .andExpect(status().isCreated());
 
         User returned = readFromJson(action, User.class);
