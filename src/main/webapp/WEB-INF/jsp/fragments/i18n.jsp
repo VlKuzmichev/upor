@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
     const i18n = [];
-    <%-- user.add / user.edit ir meal.add/meal.edit --%>
+    <%-- user.add / user.edit --%>
     i18n["addTitle"] = '<spring:message code="${param.page}.add"/>';
     i18n["editTitle"] = '<spring:message code="${param.page}.edit"/>';
 
