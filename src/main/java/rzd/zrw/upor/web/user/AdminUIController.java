@@ -43,8 +43,10 @@ public class AdminUIController {
     }
 
 //    @PostMapping
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void createOrUpdate(UserTo userTo) {
+//    public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return ValidationUtil.getErrorResponse(result);
+//        }
 //        if (userTo.isNew()) {
 //            User user = UserUtil.createNewFromTo(userTo);
 //            user.setDepartment(departmentService.get(userTo.getDepartmentId()));
@@ -55,13 +57,11 @@ public class AdminUIController {
 //            updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
 //            userService.update(updatedUser);
 //        }
+//        return ResponseEntity.ok().build();
 //    }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
-        if (result.hasErrors()) {
-            return ValidationUtil.getErrorResponse(result);
-        }
+    public void createOrUpdate(@Valid UserTo userTo) {
         if (userTo.isNew()) {
             User user = UserUtil.createNewFromTo(userTo);
             user.setDepartment(departmentService.get(userTo.getDepartmentId()));
@@ -72,7 +72,6 @@ public class AdminUIController {
             updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
             userService.update(updatedUser);
         }
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}")
