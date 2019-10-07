@@ -1,12 +1,13 @@
 package rzd.zrw.upor.to;
 
+import rzd.zrw.upor.HasEmail;
 import rzd.zrw.upor.HasId;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class UserTo implements HasId {
+public class UserTo implements HasId, HasEmail {
     private Integer id;
 
     @NotBlank
@@ -20,7 +21,7 @@ public class UserTo implements HasId {
     @Size(max = 100)
     private String email;
 
-    @Size(min = 5, max = 32, message = "length must between 5 and 32 characters")
+    @Size(min = 5, max = 32)
     private String password;
 
     private Integer departmentId;
@@ -66,6 +67,7 @@ public class UserTo implements HasId {
         this.name = name;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }

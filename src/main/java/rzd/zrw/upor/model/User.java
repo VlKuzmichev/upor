@@ -6,6 +6,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
+import rzd.zrw.upor.HasEmail;
 import rzd.zrw.upor.View;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"},
         name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity{
+public class User extends AbstractNamedEntity implements HasEmail {
 
     @Column(name = "full_name")
     @Size(max = 100)
@@ -94,6 +95,7 @@ public class User extends AbstractNamedEntity{
         this.fullName = fullName;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }

@@ -17,7 +17,7 @@
                 <h3>${userTo.name} <spring:message code="app.profile"/></h3>
                 <form:form class="form-group" modelAttribute="userTo" method="post" action="profile"
                            charset="utf-8" accept-charset="UTF-8">
-
+                    <input name="id" value="${userTo.id}" type="hidden">
                     <upor:inputField labelCode="user.name" name="name"/>
                     <upor:inputField labelCode="user.fullName" name="fullName"/>
                     <upor:inputField labelCode="user.email" name="email"/>

@@ -57,7 +57,6 @@ public class RootController {
         if (result.hasErrors()) {
             return "profile";
         }
-        try {
             User user = userService.getWithDepartment(SecurityUtil.authUserId());
             User updatedUser = UserUtil.updateFromTo(user, userTo);
             //updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
@@ -66,27 +65,8 @@ public class RootController {
             userService.update(updatedUser, SecurityUtil.authUserId());
             SecurityUtil.get().update(userTo);
             status.setComplete();
-            return "redirect:users";
+            return "redirect:/";
 //            return "redirect:logout";
-        } catch (DataIntegrityViolationException ex) {
-            result.rejectValue("email", EXCEPTION_DUPLICATE_EMAIL);
-            return "profile";
-        }
     }
-//    @PostMapping("/profile")
-//    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
-//        if (result.hasErrors()) {
-//            return "profile";
-//        }
-//        try {
-//            super.update(userTo, SecurityUtil.authUserId());
-//            SecurityUtil.get().update(userTo);
-//            status.setComplete();
-//            return "redirect:meals";
-//        } catch (DataIntegrityViolationException ex) {
-//            result.rejectValue("email", EXCEPTION_DUPLICATE_EMAIL);
-//            return "profile";
-//        }
-//    }
 
 }
