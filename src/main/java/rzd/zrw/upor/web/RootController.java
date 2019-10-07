@@ -1,6 +1,7 @@
 package rzd.zrw.upor.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ import rzd.zrw.upor.util.UserUtil;
 import rzd.zrw.upor.web.user.AbstractUserController;
 
 import javax.validation.Valid;
+
+import static rzd.zrw.upor.web.user.AdminRestController.EXCEPTION_DUPLICATE_EMAIL;
 
 
 @Controller
@@ -53,7 +56,8 @@ public class RootController {
     public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
         if (result.hasErrors()) {
             return "profile";
-        } else {
+        }
+        try {
             User user = userService.getWithDepartment(SecurityUtil.authUserId());
             User updatedUser = UserUtil.updateFromTo(user, userTo);
             //updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
@@ -64,7 +68,25 @@ public class RootController {
             status.setComplete();
             return "redirect:users";
 //            return "redirect:logout";
+        } catch (DataIntegrityViolationException ex) {
+            result.rejectValue("email", EXCEPTION_DUPLICATE_EMAIL);
+            return "profile";
         }
     }
+//    @PostMapping("/profile")
+//    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+//        if (result.hasErrors()) {
+//            return "profile";
+//        }
+//        try {
+//            super.update(userTo, SecurityUtil.authUserId());
+//            SecurityUtil.get().update(userTo);
+//            status.setComplete();
+//            return "redirect:meals";
+//        } catch (DataIntegrityViolationException ex) {
+//            result.rejectValue("email", EXCEPTION_DUPLICATE_EMAIL);
+//            return "profile";
+//        }
+//    }
 
 }

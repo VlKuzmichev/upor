@@ -19,6 +19,7 @@ import static rzd.zrw.upor.util.ValidationUtil.checkNew;
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
 
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
     public static final String REST_URL = "/rest/admin/users";
 
     @Autowired
