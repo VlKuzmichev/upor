@@ -7,6 +7,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -15,10 +16,14 @@ import rzd.zrw.upor.TimingExtension;
 import rzd.zrw.upor.repository.JpaUtil;
 import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
+import rzd.zrw.upor.util.exception.ErrorType;
 
 import javax.annotation.PostConstruct;
 
+import java.util.Locale;
+
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringJUnitConfig(locations = {
         "classpath:spring/spring-app.xml",
@@ -51,6 +56,9 @@ abstract public class AbstractControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    protected MessageUtil messageUtil;
+
     @PostConstruct
     private void postConstruct() {
         mockMvc = MockMvcBuilders
@@ -66,6 +74,18 @@ abstract public class AbstractControllerTest {
         if (jpaUtil != null) {
             jpaUtil.clear2ndLevelHibernateCache();
         }
+    }
+
+    private String getMessage(String code) {
+        return messageUtil.getMessage(code, Locale.ENGLISH);
+    }
+
+    public ResultMatcher errorType(ErrorType type) {
+        return jsonPath("$.type").value(type.name());
+    }
+
+    public ResultMatcher detailMessage(String code) {
+        return jsonPath("$.details").value(getMessage(code));
     }
 
 }

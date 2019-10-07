@@ -18,7 +18,7 @@ import rzd.zrw.upor.web.user.AbstractUserController;
 
 import javax.validation.Valid;
 
-import static rzd.zrw.upor.web.user.AdminRestController.EXCEPTION_DUPLICATE_EMAIL;
+import static rzd.zrw.upor.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
 
 @Controller
