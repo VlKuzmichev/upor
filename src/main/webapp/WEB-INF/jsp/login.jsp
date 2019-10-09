@@ -16,7 +16,7 @@
     <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="webjars/jquery/3.3.1-2/jquery.min.js" defer></script>
 </head>
-
+<%--<jsp:include page="fragments/headTag.jsp"/>--%>
 <body class="text-center">
 <form:form class="form-signin" id="login_form" action="spring_security_check" method="post">
     <img class="mb-4" src="" alt="" width="72" height="72">
@@ -49,11 +49,19 @@
 </form:form>
 
 <script type="text/javascript">
+    <c:if test="${not empty param.username}">
+    setCredentials("${param.username}", "");
+    </c:if>
+
     function login(username, password) {
-        $('input[name="username"]').val(username);
-        $('input[name="password"]').val(password);
+        setCredentials(username, password);
         $("#login_form").submit();
     }
+    function setCredentials(username, password) {
+        $('input[name="username"]').val(username);
+        $('input[name="password"]').val(password);
+    }
+
 </script>
 
 </body>
