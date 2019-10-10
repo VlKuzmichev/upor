@@ -1,5 +1,6 @@
 package rzd.zrw.upor.to;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import rzd.zrw.upor.HasEmail;
 import rzd.zrw.upor.HasId;
 
@@ -12,13 +13,17 @@ public class UserTo implements HasId, HasEmail {
 
     @NotBlank
     @Size(min = 2, max = 100)
+    @SafeHtml
     private String name;
 
+    @SafeHtml
+    @Size(min = 2, max = 100)
     private String fullName;
 
     @Email
     @NotBlank
     @Size(max = 100)
+    @SafeHtml // https://stackoverflow.com/questions/17480809
     private String email;
 
     @Size(min = 5, max = 32)
