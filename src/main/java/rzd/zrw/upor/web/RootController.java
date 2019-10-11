@@ -1,24 +1,23 @@
 package rzd.zrw.upor.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
+import rzd.zrw.upor.AuthorizedUser;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
 import rzd.zrw.upor.to.UserTo;
 import rzd.zrw.upor.util.UserUtil;
-import rzd.zrw.upor.web.user.AbstractUserController;
 
 import javax.validation.Valid;
-
-import static rzd.zrw.upor.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
 
 @Controller
@@ -48,25 +47,23 @@ public class RootController {
     }
 
     @GetMapping("/profile")
-    public String profile() {
+    public String profile(ModelMap model, @AuthenticationPrincipal AuthorizedUser authUser) {
+        model.addAttribute("userTo", authUser.getUserTo());
         return "profile";
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status, @AuthenticationPrincipal AuthorizedUser authUser) {
         if (result.hasErrors()) {
             return "profile";
         }
-            User user = userService.getWithDepartment(SecurityUtil.authUserId());
+            User user = userService.getWithDepartment(authUser.getId());
             User updatedUser = UserUtil.updateFromTo(user, userTo);
-            //updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
-         //   userService.update(updatedUser);
-
+            authUser.update(userTo);
             userService.update(updatedUser, SecurityUtil.authUserId());
             SecurityUtil.get().update(userTo);
             status.setComplete();
             return "redirect:/";
-//            return "redirect:logout";
     }
 
 }

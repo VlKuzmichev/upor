@@ -7,6 +7,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -17,15 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import rzd.zrw.upor.util.ValidationUtil;
-import rzd.zrw.upor.util.exception.ErrorInfo;
-import rzd.zrw.upor.util.exception.ErrorType;
-import rzd.zrw.upor.util.exception.IllegalRequestDataException;
-import rzd.zrw.upor.util.exception.NotFoundException;
+import rzd.zrw.upor.util.exception.*;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import static rzd.zrw.upor.util.exception.ErrorType.*;
@@ -46,12 +42,10 @@ public class ExceptionInfoHandler {
     @Autowired
     private MessageUtil messageUtil;
 
-
-    //  http://stackoverflow.com/a/22358422/548473
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(NotFoundException.class)
-    public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
-        return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ErrorInfo> applicationError(HttpServletRequest req, ApplicationException appEx) {
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, appEx, false, appEx.getType(), messageUtil.getMessage(appEx));
+        return ResponseEntity.status(appEx.getHttpStatus()).body(errorInfo);
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
@@ -82,7 +76,6 @@ public class ExceptionInfoHandler {
 
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, details);
     }
-
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler({IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})

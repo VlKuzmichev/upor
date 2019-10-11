@@ -57,8 +57,9 @@
                                placeholder="<spring:message code="user.fullName"/>">
                     </div>
                     <div class="form-group">
-                        <label for="departmentId" class="col-form-label"><spring:message code="user.department"/></label>
-                        <select id="departmentId" name = "departmentId" class="form-control mx-0">
+                        <label for="departmentId" class="col-form-label"><spring:message
+                                code="user.department"/></label>
+                        <select id="departmentId" name="departmentId" class="form-control mx-0">
                         </select>
                     </div>
 

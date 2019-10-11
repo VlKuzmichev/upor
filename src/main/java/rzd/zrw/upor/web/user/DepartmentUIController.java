@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rzd.zrw.upor.model.Department;
-import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.DepartmentService;
 
 import java.util.List;
