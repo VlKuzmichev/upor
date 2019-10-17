@@ -17,9 +17,6 @@
                 <li class="nav-item">
                     <sec:authorize access="isAuthenticated()">
                         <form:form class="form-inline my-2" action="logout" method="post">
-<%--                            <sec:authorize access="hasRole('ROLE_ADMIN')">--%>
-<%--                                <a class="btn btn-secondary mr-1" href="users"><spring:message code="user.title"/></a>--%>
-<%--                            </sec:authorize>--%>
                             <a class="btn btn-dark mr-1" href="profile">
                                     <%-- <sec:authentication property="principal.userTo.name"/>--%>
                                 <spring:message code="app.profile"/></a>
@@ -58,12 +55,14 @@
 <div class="container-top" id="menu">
     <ul class="navbar-nav ml-lg-5">
         <li class="nav-item">
+        <sec:authorize access="isAuthenticated()">
             <a class="btn btn-secondary mr-1" href="/"><spring:message code="app.incidents"/></a>
             <a class="btn btn-secondary mr-1" href="/"><spring:message code="app.vehicle"/></a>
             <a class="btn btn-secondary mr-1" href="/"><spring:message code="app.tasks"/></a>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <a class="btn btn-danger mr-1" href="users"><spring:message code="user.title"/></a>
             </sec:authorize>
+        </sec:authorize>
         </li>
     </ul>
 </div>

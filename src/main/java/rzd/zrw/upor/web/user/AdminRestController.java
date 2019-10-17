@@ -40,11 +40,6 @@ public class AdminRestController {
         return service.getAll();
     }
 
-    @GetMapping("/department")
-    public List<User> getAllByDepartment(@RequestParam int departmentId) {
-        return service.getAllByDepartment(departmentId);
-    }
-
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
         return service.get(id);

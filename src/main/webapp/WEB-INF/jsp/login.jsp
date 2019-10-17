@@ -19,7 +19,7 @@
 <%--<jsp:include page="fragments/headTag.jsp"/>--%>
 <body class="text-center">
 <form:form class="form-signin" id="login_form" action="spring_security_check" method="post">
-    <img class="mb-4" src="" alt="" width="72" height="72">
+    <img class="mb-4" src="resources/images/upor.png" alt="" width="52" height="50">
     <h1 class="h3 mb-3 font-weight-normal">Пожалуйста, авторизуйтесь</h1>
     <input class="form-control" id="Email" type="text" placeholder="Email" name="username">
     <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="password">

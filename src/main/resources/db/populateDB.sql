@@ -19,7 +19,8 @@ INSERT INTO users (name, full_name, email, password, department_id) VALUES
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100004),
   ('ROLE_DISPATCHER', 100005),
-  ('ROLE_ADMIN', 100006);
+  ('ROLE_ADMIN', 100006),
+  ('ROLE_sADMIN', 100006);
 
 INSERT INTO devs_comm (date_time, reg_list, type_comm, location, defect, description, resp_empl, user_id)
 VALUES ('2019-07-27 11:00:00', '93237706', 'ПАБ', 'Чернышк – Бука', 'Не работает ПАБ (телеграмма ДНЧ Мурина В.С.)', 'Будут разбираться 17-18-19.10.18г.

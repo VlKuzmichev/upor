@@ -1,5 +1,9 @@
 const userAjaxUrl = "ajax/admin/users/";
 
+function getDepartmentId() {
+    $
+}
+
 function enable(chkbox, id) {
     const enabled = chkbox.is(":checked");
 //  https://stackoverflow.com/a/22213543/548473
@@ -17,6 +21,7 @@ function enable(chkbox, id) {
 
 // $(document).ready(function () {
 $(function () {
+    debugger;
     makeEditable({
             ajaxUrl: userAjaxUrl,
             datatableOpts: {

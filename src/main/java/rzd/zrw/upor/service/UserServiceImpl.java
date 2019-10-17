@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import rzd.zrw.upor.AuthorizedUser;
+import rzd.zrw.upor.model.Role;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.repository.DepartmentRepository;
 import rzd.zrw.upor.repository.UserRepository;
 import rzd.zrw.upor.util.exception.NotFoundException;
+import rzd.zrw.upor.web.SecurityUtil;
 
 import java.util.List;
 
@@ -75,14 +77,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void update(User user) {
 //        repository.save(user);
-      //  User userser = updateFromTo(get(user.getId()), userTo);
+        //  User userser = updateFromTo(get(user.getId()), userTo);
         repository.save(prepareToSave(user, passwordEncoder));
     }
 
-//    @Cacheable("users")
+    //    @Cacheable("users")
     @Override
     public List<User> getAll() {
-        return repository.getAll();
+        User user = getWithDepartment(SecurityUtil.authUserId());
+        if (user.getRoles().contains(Role.ROLE_sADMIN))
+            return repository.getAll();
+        return getAllByDepartment(user.getDepartment().getId());
+        //return repository.getAll();
     }
 
     @Override

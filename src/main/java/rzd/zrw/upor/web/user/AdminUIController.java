@@ -43,7 +43,6 @@ public class AdminUIController {
         userService.delete(id);
     }
 
-
     @PostMapping
     public void createOrUpdate(@Valid UserTo userTo) {
         if (userTo.isNew()) {
