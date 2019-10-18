@@ -17,7 +17,7 @@
                 <li class="nav-item">
                     <sec:authorize access="isAuthenticated()">
                         <form:form class="form-inline my-2" action="logout" method="post">
-                            <a class="btn btn-dark mr-1" href="profile">
+                            <a class="btn btn-outline-secondary" href="profile">
                                     <%-- <sec:authentication property="principal.userTo.name"/>--%>
                                 <spring:message code="app.profile"/></a>
                             <div class="mx-1">
@@ -29,16 +29,16 @@
                             </button>
                         </form:form>
                     </sec:authorize>
-                    <sec:authorize access="isAnonymous()">
-                        <form:form class="form-inline my-2" id="login_form" action="spring_security_check"
-                                   method="post">
-                            <input class="form-control mr-1" type="text" placeholder="Email" name="username">
-                            <input class="form-control mr-1" type="password" placeholder="Password" name="password">
-                            <button class="btn btn-success" type="submit">
-                                <span class="fa fa-sign-in"></span>
-                            </button>
-                        </form:form>
-                    </sec:authorize>
+<%--                    <sec:authorize access="isAnonymous()">--%>
+<%--                        <form:form class="form-inline my-2" id="login_form" action="spring_security_check"--%>
+<%--                                   method="post">--%>
+<%--                            <input class="form-control mr-1" type="text" placeholder="Email" name="username">--%>
+<%--                            <input class="form-control mr-1" type="password" placeholder="Password" name="password">--%>
+<%--                            <button class="btn btn-success" type="submit">--%>
+<%--                                <span class="fa fa-sign-in"></span>--%>
+<%--                            </button>--%>
+<%--                        </form:form>--%>
+<%--                    </sec:authorize>--%>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link my-1 ml-2"
