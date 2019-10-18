@@ -19,12 +19,12 @@
 <body class="text-center">
 <form:form class="form-signin" id="login_form" action="spring_security_check" method="post">
     <img class="mb-4" src="resources/images/upor.png">
-    <h1 class="h1 mb-3 font-weight-bold">АС "УПОР"</h1>
+    <h1 class="h1 mb-3 font-weight-bold"><spring:message code="app.titleshort"/></h1>
 
-    <h2 class="h3 mb-3 font-weight-normal">Пожалуйста, авторизуйтесь</h2>
+    <h2 class="h3 mb-3 font-weight-normal"><spring:message code="app.askauth"/></h2>
     <input class="form-control" id="Email" type="text" placeholder="Email" name="username">
     <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="password">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="app.enter"/></button>
     <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
     <c:if test="${param.error}">
         <div class="error">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>

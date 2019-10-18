@@ -21,7 +21,7 @@
                                     <%-- <sec:authentication property="principal.userTo.name"/>--%>
                                 <spring:message code="app.profile"/></a>
                             <div class="mx-1">
-                                Здравствуйте, <sec:authentication property="principal.userTo.name"/>
+                                <spring:message code="user.hello"/>, <sec:authentication property="principal.userTo.name"/>
                             </div>
 
                             <button class="btn btn-danger" type="submit">
