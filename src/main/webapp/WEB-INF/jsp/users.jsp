@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -56,12 +58,14 @@
                         <input type="text" class="form-control" id="fullName" name="fullName"
                                placeholder="<spring:message code="user.fullName"/>">
                     </div>
+                    <sec:authorize access="hasRole('ROLE_sADMIN')">
                     <div class="form-group">
                         <label for="departmentId" class="col-form-label"><spring:message
                                 code="user.department"/></label>
                         <select id="departmentId" name="departmentId" class="form-control mx-0">
                         </select>
                     </div>
+                    </sec:authorize>
 
                     <div class="form-group">
                         <label for="email" class="col-form-label"><spring:message code="user.email"/></label>

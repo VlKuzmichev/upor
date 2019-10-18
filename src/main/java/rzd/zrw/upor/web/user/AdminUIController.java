@@ -10,8 +10,10 @@ import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
 import rzd.zrw.upor.to.UserTo;
 import rzd.zrw.upor.util.UserUtil;
+import rzd.zrw.upor.web.SecurityUtil;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @RestController
@@ -47,7 +49,8 @@ public class AdminUIController {
     public void createOrUpdate(@Valid UserTo userTo) {
         if (userTo.isNew()) {
             User user = UserUtil.createNewFromTo(userTo);
-            user.setDepartment(departmentService.get(userTo.getDepartmentId()));
+            if (userTo.getDepartmentId() != null ) user.setDepartment(departmentService.get(userTo.getDepartmentId()));
+            else user.setDepartment(userService.getWithDepartment(SecurityUtil.authUserId()).getDepartment());
             userService.create(user);
         } else {
             User user = userService.get(userTo.getId());
