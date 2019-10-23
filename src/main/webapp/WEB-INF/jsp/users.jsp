@@ -47,7 +47,6 @@
             <div class="modal-body">
                 <form id="detailsForm">
                     <input type="hidden" id="id" name="id">
-
                     <div class="form-group">
                         <label for="name" class="col-form-label"><spring:message code="user.name"/></label>
                         <input type="text" class="form-control" id="name" name="name"
@@ -59,14 +58,65 @@
                                placeholder="<spring:message code="user.fullName"/>">
                     </div>
                     <sec:authorize access="hasRole('ROLE_sADMIN')">
-                    <div class="form-group">
-                        <label for="departmentId" class="col-form-label"><spring:message
-                                code="user.department"/></label>
-                        <select id="departmentId" name="departmentId" class="form-control mx-0">
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="departmentId" class="col-form-label"><spring:message
+                                    code="user.department"/></label>
+                            <select id="departmentId" name="departmentId" class="form-control mx-0">
+                            </select>
+                        </div>
                     </sec:authorize>
 
+                    <%--Need refactoring. Dinamic add checkboxes using Role object for example.--%>
+                    <div class="form-group">
+                        <label class="col-form-label">Роли</label><BR>
+                        <div class="form-row">
+                            <div class="col">
+                                <input id="role_user" type="checkbox" name="roles" value="ROLE_USER">ROLE_USER
+                            </div>
+                            <div class="col">
+                                <input id="role_dispatcher" type="checkbox" name="roles" value="ROLE_DISPATCHER">ROLE_DISPATCHER
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <input id="role_auditor" type="checkbox" name="roles" value="ROLE_AUDITOR">ROLE_AUDITOR
+                            </div>
+                            <div class="col">
+                                <input id="role_boss" type="checkbox" name="roles" value="ROLE_BOSS">ROLE_BOSS
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col">
+                                <input id="role_admin" type="checkbox" name="roles" value="ROLE_ADMIN">ROLE_ADMIN
+                            </div>
+                        </div>
+                    <sec:authorize access="hasRole('ROLE_sADMIN')">
+                        <div class="form-row">
+                            <div class="col">
+                                <input id="role_suser" type="checkbox" name="roles" value="ROLE_sUSER">ROLE_sUSER
+                            </div>
+                            <div class="col">
+                                <input id="role_sdispatcher" type="checkbox" name="roles" value="ROLE_sDISPATCHER">ROLE_sDISPATCHER
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col">
+                                <input id="role_sauditor" type="checkbox" name="roles" value="ROLE_sAUDITOR">ROLE_sAUDITOR
+                            </div>
+                            <div class="col">
+                                <input id="role_sboss" type="checkbox" name="roles" value="ROLE_sBOSS">ROLE_sBOSS
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col">
+                                <input id="role_sadmin" type="checkbox" name="roles" value="ROLE_sADMIN">ROLE_sADMIN
+                            </div>
+                        </div>
+                    </sec:authorize>
+                    </div>
                     <div class="form-group">
                         <label for="email" class="col-form-label"><spring:message code="user.email"/></label>
                         <input type="email" class="form-control" id="email" name="email"

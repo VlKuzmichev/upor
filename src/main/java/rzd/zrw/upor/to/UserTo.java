@@ -3,10 +3,14 @@ package rzd.zrw.upor.to;
 import org.hibernate.validator.constraints.SafeHtml;
 import rzd.zrw.upor.HasEmail;
 import rzd.zrw.upor.HasId;
+import rzd.zrw.upor.model.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Set;
 
 public class UserTo implements HasId, HasEmail {
     private Integer id;
@@ -26,6 +30,9 @@ public class UserTo implements HasId, HasEmail {
     @SafeHtml // https://stackoverflow.com/questions/17480809
     private String email;
 
+    @NotNull
+    private Set<Role> roles;
+
     @Size(min = 5, max = 32)
     private String password;
 
@@ -38,13 +45,14 @@ public class UserTo implements HasId, HasEmail {
         this.id = id;
     }
 
-    public UserTo(Integer id, String name, String fullName, String email, String password, Integer departmentId) {
+    public UserTo(Integer id, String name, String fullName, String email, String password, Integer departmentId, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.departmentId = departmentId;
+        this.roles = roles;
     }
     @Override
     public Integer getId() {
@@ -87,6 +95,14 @@ public class UserTo implements HasId, HasEmail {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

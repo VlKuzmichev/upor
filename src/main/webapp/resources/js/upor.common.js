@@ -37,8 +37,17 @@ function makeEditable(ctx) {
 }
 
 function add() {
+    debugger;
     $("#modalTitle").html(i18n["addTitle"]);
-    form.find(":input").val("");
+    $("input[id^='role']").each(function (key, val) {
+        $(this).prop('checked', false);
+    });
+    $('#id').val("");
+    $('#name').val("");
+    $('#fullName').val("");
+    $('#email').val("");
+    $('#password').val("");
+    //form.find(":input").val("");
     $('#departmentId').find('option').remove();
     $.ajax({
         url: departmentAjaxUrl,
@@ -70,11 +79,17 @@ function updateRow(id) {
     var id;
     $("#modalTitle").html(i18n["editTitle"]);
     $('#departmentId').find('option').remove();
+    $("input[id^='role']").each(function (key, val) {
+        $(this).prop('checked', false);
+    });
     $.get(context.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
-            if (key === "department"){
+            if (key === "department") {
                 id = value.id;
+            }
+            if (key === "roles") {
+                value.forEach(setCheckboxes);
             }
         });
         $.ajax({
@@ -87,7 +102,7 @@ function updateRow(id) {
                 if (value.id === id) {
                     $('#departmentId').append($('<option>').text(value.name)
                         .attr('value', value.id).attr("selected", "selected"));
-                }else{
+                } else {
                     $('#departmentId').append($('<option>').text(value.name)
                         .attr('value', value.id));
                 }
@@ -95,6 +110,10 @@ function updateRow(id) {
         });
         $('#editRow').modal();
     });
+}
+
+function setCheckboxes(item) {
+    $('#'.concat(item.toLowerCase())).prop('checked', true);
 }
 
 function updateTableByData(data) {

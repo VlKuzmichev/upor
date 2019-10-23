@@ -1,7 +1,7 @@
 const userAjaxUrl = "ajax/admin/users/";
 
 function getDepartmentId() {
-    $
+
 }
 
 function enable(chkbox, id) {
@@ -21,7 +21,6 @@ function enable(chkbox, id) {
 
 // $(document).ready(function () {
 $(function () {
-    debugger;
     makeEditable({
             ajaxUrl: userAjaxUrl,
             datatableOpts: {

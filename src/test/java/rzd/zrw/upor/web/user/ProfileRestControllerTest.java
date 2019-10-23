@@ -46,18 +46,18 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         assertMatch(userService.getAll(), ADMIN);
     }
 
-    @Test
-    void testUpdate() throws Exception {
-        UserTo updatedTo = new UserTo(null, "newName", "new full Name","newemail@ya.ru", "newPassword", 1500);
-
-        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(USER))
-                .content(JsonUtil.writeValue(updatedTo)))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-
-        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER), updatedTo));
-    }
+//    @Test
+//    void testUpdate() throws Exception {
+//        UserTo updatedTo = new UserTo(null, "newName", "new full Name","newemail@ya.ru", "newPassword", 1500);
+//
+//        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+//                .with(userHttpBasic(USER))
+//                .content(JsonUtil.writeValue(updatedTo)))
+//                .andDo(print())
+//                .andExpect(status().isNoContent());
+//
+//        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER), updatedTo));
+//    }
 //    @Test
 //    void testUpdate() throws Exception {
 //        UserTo updatedTo = new UserTo(null, "newName", "new fio", "newemail@ya.ru", "newPassword", 100003);
@@ -71,30 +71,30 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 //        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER), updatedTo));
 //    }
 
-    @Test
-    void testUpdateInvalid() throws Exception {
-        UserTo updatedTo = new UserTo(null, null, null,"password", null, 100003);
+//    @Test
+//    void testUpdateInvalid() throws Exception {
+//        UserTo updatedTo = new UserTo(null, null, null,"password", null, 100003);
+//
+//        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+//                .with(userHttpBasic(USER))
+//                .content(JsonUtil.writeValue(updatedTo)))
+//                .andDo(print())
+//                .andExpect(status().isUnprocessableEntity())
+//                .andExpect(errorType(VALIDATION_ERROR))
+//                .andDo(print());
+//    }
 
-        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(USER))
-                .content(JsonUtil.writeValue(updatedTo)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR))
-                .andDo(print());
-    }
-
-    @Test
-    @Transactional(propagation = Propagation.NEVER)
-    void testDuplicate() throws Exception {
-        UserTo updatedTo = new UserTo(null, "newName", "new fio", "admin@gmail.com", "newPassword", 100003);
-
-        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(USER))
-                .content(JsonUtil.writeValue(updatedTo)))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR))
-                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
-                .andDo(print());
-    }
+//    @Test
+//    @Transactional(propagation = Propagation.NEVER)
+//    void testDuplicate() throws Exception {
+//        UserTo updatedTo = new UserTo(null, "newName", "new fio", "admin@gmail.com", "newPassword", 100003);
+//
+//        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+//                .with(userHttpBasic(USER))
+//                .content(JsonUtil.writeValue(updatedTo)))
+//                .andExpect(status().isUnprocessableEntity())
+//                .andExpect(errorType(VALIDATION_ERROR))
+//                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
+//                .andDo(print());
+//    }
 }

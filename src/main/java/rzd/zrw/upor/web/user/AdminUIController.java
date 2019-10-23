@@ -13,7 +13,6 @@ import rzd.zrw.upor.util.UserUtil;
 import rzd.zrw.upor.web.SecurityUtil;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
 import java.util.List;
 
 @RestController
@@ -49,13 +48,17 @@ public class AdminUIController {
     public void createOrUpdate(@Valid UserTo userTo) {
         if (userTo.isNew()) {
             User user = UserUtil.createNewFromTo(userTo);
-            if (userTo.getDepartmentId() != null ) user.setDepartment(departmentService.get(userTo.getDepartmentId()));
+            user.setRoles(userTo.getRoles());
+            if (userTo.getDepartmentId() != null) user.setDepartment(departmentService.get(userTo.getDepartmentId()));
             else user.setDepartment(userService.getWithDepartment(SecurityUtil.authUserId()).getDepartment());
             userService.create(user);
         } else {
             User user = userService.get(userTo.getId());
             User updatedUser = UserUtil.updateFromTo(user, userTo);
-            updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
+            updatedUser.setRoles(userTo.getRoles());
+            if (userTo.getDepartmentId() != null)
+                updatedUser.setDepartment(departmentService.get(userTo.getDepartmentId()));
+            else updatedUser.setDepartment(userService.getWithDepartment(SecurityUtil.authUserId()).getDepartment());
             userService.update(updatedUser);
         }
     }

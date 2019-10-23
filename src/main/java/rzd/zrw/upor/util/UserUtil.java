@@ -21,7 +21,8 @@ public class UserUtil {
     }
 
     public static UserTo asTo(User user) {
-        return new UserTo(user.getId(), user.getName(), user.getFullName(), user.getEmail(), user.getPassword(), user.getDepartment().getId());
+        return new UserTo(user.getId(), user.getName(), user.getFullName(), user.getEmail(), user.getPassword(), user.getDepartment().getId(), user.getRoles());
+//        return new UserTo(user.getId(), user.getName(), user.getFullName(), user.getEmail(), user.getPassword(), user.getDepartment().getId());
     }
 
     public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
