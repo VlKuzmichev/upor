@@ -41,7 +41,17 @@ $(function () {
                         }
                     },
                     {
-                        "data": "roles"
+                        "data": "roles",
+                         "render": function (data, type, row) {
+                             if (type === "display") {
+                                 var result = "";
+                                 data.forEach(function (item) {
+                                     result += item + " ";
+                                 })
+                                 return result;
+                             }
+                             return data;
+                         }
                     },
                     {
                         "data": "enabled",
