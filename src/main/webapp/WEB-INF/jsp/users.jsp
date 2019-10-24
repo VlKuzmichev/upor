@@ -46,6 +46,7 @@
             </div>
             <div class="modal-body">
                 <form id="detailsForm">
+                    <%--                    <sec:authorize access="hasAnyRole('admin','superadmin')" var="isAuthorizeAny"></sec:authorize>--%>
                     <input type="hidden" id="id" name="id">
                     <div class="form-group">
                         <label for="name" class="col-form-label"><spring:message code="user.name"/></label>
@@ -91,31 +92,32 @@
                                 <input id="role_admin" type="checkbox" name="roles" value="ROLE_ADMIN">ROLE_ADMIN
                             </div>
                         </div>
-                    <sec:authorize access="hasRole('ROLE_sADMIN')">
+
+                        <label class="col-form-label">Глобальные роли</label><BR>
                         <div class="form-row">
                             <div class="col">
-                                <input id="role_suser" type="checkbox" name="roles" value="ROLE_sUSER">ROLE_sUSER
+                                <input id="role_suser" type="checkbox" name="roles" value="ROLE_sUSER" disabled>ROLE_sUSER
                             </div>
                             <div class="col">
-                                <input id="role_sdispatcher" type="checkbox" name="roles" value="ROLE_sDISPATCHER">ROLE_sDISPATCHER
+                                <input id="role_sdispatcher" type="checkbox" name="roles" value="ROLE_sDISPATCHER"
+                                       disabled>ROLE_sDISPATCHER
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="col">
-                                <input id="role_sauditor" type="checkbox" name="roles" value="ROLE_sAUDITOR">ROLE_sAUDITOR
+                                <input id="role_sauditor" type="checkbox" name="roles" value="ROLE_sAUDITOR" disabled>ROLE_sAUDITOR
                             </div>
                             <div class="col">
-                                <input id="role_sboss" type="checkbox" name="roles" value="ROLE_sBOSS">ROLE_sBOSS
+                                <input id="role_sboss" type="checkbox" name="roles" value="ROLE_sBOSS" disabled>ROLE_sBOSS
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="col">
-                                <input id="role_sadmin" type="checkbox" name="roles" value="ROLE_sADMIN">ROLE_sADMIN
+                                <input id="role_sadmin" type="checkbox" name="roles" value="ROLE_sADMIN" disabled>ROLE_sADMIN
                             </div>
                         </div>
-                    </sec:authorize>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-form-label"><spring:message code="user.email"/></label>
@@ -148,4 +150,12 @@
 <jsp:include page="fragments/i18n.jsp">
     <jsp:param name="page" value="user"/>
 </jsp:include>
+<script type="text/javascript">
+    var hasRoleSuAdmin = false;
+</script>
+<sec:authorize access="hasRole('ROLE_sADMIN')">
+    <script type="text/javascript">
+        hasRoleSuAdmin = true;
+    </script>
+</sec:authorize>
 </html>

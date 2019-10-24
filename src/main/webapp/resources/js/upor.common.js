@@ -37,7 +37,11 @@ function makeEditable(ctx) {
 }
 
 function add() {
-    debugger;
+//    debugger;
+    if(hasRoleSuAdmin == true){
+        $(":input[id^='role']:disabled").prop("disabled", false);
+    }
+    hasRoleSuAdmin = false;
     $("#modalTitle").html(i18n["addTitle"]);
     $("input[id^='role']").each(function (key, val) {
         $(this).prop('checked', false);
@@ -47,7 +51,6 @@ function add() {
     $('#fullName').val("");
     $('#email').val("");
     $('#password').val("");
-    //form.find(":input").val("");
     $('#departmentId').find('option').remove();
     $.ajax({
         url: departmentAjaxUrl,
@@ -77,6 +80,9 @@ function deleteRow(id) {
 
 function updateRow(id) {
     var id;
+    if(hasRoleSuAdmin == true){
+        $(":input[id^='role']:disabled").prop("disabled", false);
+    }
     $("#modalTitle").html(i18n["editTitle"]);
     $('#departmentId').find('option').remove();
     $("input[id^='role']").each(function (key, val) {
@@ -121,15 +127,17 @@ function updateTableByData(data) {
 }
 
 function save() {
+    let disabled = form.find(":input:disabled").prop("disabled", false);
     $.ajax({
         type: "POST",
         url: context.ajaxUrl,
-        data: form.serialize()
+        data: form.serialize(),
     }).done(function () {
         $("#editRow").modal("hide");
         context.updateTable();
         successNoty("common.saved");
     });
+    disabled.prop("disabled", true);
 }
 
 let failedNote;
@@ -160,7 +168,6 @@ function failNoty(jqXHR) {
         layout: "bottomRight"
     }).show();
 }
-
 
 function renderEditBtn(data, type, row) {
     if (type === "display") {
