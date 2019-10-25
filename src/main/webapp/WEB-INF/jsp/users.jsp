@@ -46,7 +46,6 @@
             </div>
             <div class="modal-body">
                 <form id="detailsForm">
-                    <%--                    <sec:authorize access="hasAnyRole('admin','superadmin')" var="isAuthorizeAny"></sec:authorize>--%>
                     <input type="hidden" id="id" name="id">
                     <div class="form-group">
                         <label for="name" class="col-form-label"><spring:message code="user.name"/></label>

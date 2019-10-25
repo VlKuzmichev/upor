@@ -35,13 +35,13 @@
     <br/>
     <sec:authorize access="isAnonymous()">
         <p>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('usersv@yandex.ru', 'password')">
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('User', 'password')">
                 <spring:message code="app.login"/> User
             </button>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('disp@yandex.ru', 'dispet')">
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('Disp', 'dispet')">
                 <spring:message code="app.login"/> Disp
             </button>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'admin')">
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('Admin', 'admin')">
                 <spring:message code="app.login"/> Admin
             </button>
         </p>

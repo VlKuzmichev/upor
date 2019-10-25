@@ -23,4 +23,7 @@ public interface UserRepository {
 
 //    User getWithDepartment(int id, int departmentId);
     User getWithDepartment(int id);
+
+    // null if not found
+    User getByName(String name);
 }
