@@ -25,4 +25,8 @@ public interface UserService {
     User getWithDepartment(int id) throws NotFoundException;
 
     void enable(int id, boolean enable);
+
+    void changePassword(User user, String password);
+
+    boolean checkIfValidOldPassword(User user, String oldPassword);
 }

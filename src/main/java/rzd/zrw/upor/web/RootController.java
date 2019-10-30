@@ -3,19 +3,23 @@ package rzd.zrw.upor.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import rzd.zrw.upor.AuthorizedUser;
+import rzd.zrw.upor.PasswordsEqualConstraint;
+import rzd.zrw.upor.PasswordsEqualConstraintValidator;
 import rzd.zrw.upor.model.User;
 import rzd.zrw.upor.service.DepartmentService;
 import rzd.zrw.upor.service.UserService;
-import rzd.zrw.upor.to.UserTo;
-import rzd.zrw.upor.util.UserUtil;
+import rzd.zrw.upor.to.PasswordFormTo;
 
 import javax.validation.Valid;
 
@@ -48,22 +52,30 @@ public class RootController {
 
     @GetMapping("/profile")
     public String profile(ModelMap model, @AuthenticationPrincipal AuthorizedUser authUser) {
-        model.addAttribute("userTo", authUser.getUserTo());
+        //model.addAttribute("userTo", authUser.getUserTo());
+        model.addAttribute("passwordFormTo", new PasswordFormTo());
+        return "profile";
+    }
+
+    @GetMapping("/profile?error=true")
+    public String incorrectPassword(ModelMap model, @AuthenticationPrincipal AuthorizedUser authUser) {
         return "profile";
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public String updateProfile(@Valid PasswordFormTo passwordFormTo, BindingResult result, SessionStatus status, @AuthenticationPrincipal AuthorizedUser authUser) {
+
         if (result.hasErrors()) {
             return "profile";
         }
-            User user = userService.getWithDepartment(authUser.getId());
-            User updatedUser = UserUtil.updateFromTo(user, userTo);
-            authUser.update(userTo);
-            userService.update(updatedUser, SecurityUtil.authUserId());
-            SecurityUtil.get().update(userTo);
-            status.setComplete();
-            return "redirect:/";
+        User user = userService.getWithDepartment(authUser.getId());
+        if (!userService.checkIfValidOldPassword(user, passwordFormTo.getOldPassword())){
+            return "profile";
+        }
+        user.setPassword(passwordFormTo.getNewPassword());
+        userService.update(user, SecurityUtil.authUserId());
+        status.setComplete();
+        return "redirect:/";
     }
 
 }

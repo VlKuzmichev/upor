@@ -46,7 +46,7 @@ $(function () {
                              if (type === "display") {
                                  var result = "";
                                  data.forEach(function (item) {
-                                     result += item + " ";
+                                     result += item + "; ";
                                  })
                                  return result;
                              }

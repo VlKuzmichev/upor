@@ -11,23 +11,21 @@
 
 <div class="jumbotron pt-4">
     <div class="container">
-        <%--@elvariable id="userTo" type="rzd.zrw.upor.to.UserTo"--%>
         <div class="row">
             <div class="col-5 offset-3">
                 <h3>${userTo.name} <spring:message code="app.profile"/></h3>
-                <form:form class="form-group" modelAttribute="userTo" method="post" action="profile"
+                <%--@elvariable id="passwordFormTo" type="rzd.zrw.upor.to.PasswordFormTo"--%>
+                <form:form class="form-group" modelAttribute="passwordFormTo" method="post" action="profile"
                            charset="utf-8" accept-charset="UTF-8">
-                    <input name="id" value="${userTo.id}" type="hidden">
-                    <upor:inputField labelCode="user.name" name="name"/>
-                    <upor:inputField labelCode="user.fullName" name="fullName"/>
-                    <upor:inputField labelCode="user.email" name="email"/>
-                    <upor:inputField labelCode="user.password" name="password" inputType="password"/>
+                    <upor:inputField labelCode="user.old_password" name="oldPassword" inputType="password"/>
+                    <upor:inputField labelCode="user.new_password" name="newPassword" inputType="password"/>
+                    <upor:inputField labelCode="user.confirm_password" name="confirmPassword" inputType="password"/>
                     <div class="text-right">
                         <a class="btn btn-secondary" href="#" onclick="window.history.back()">
                             <span class="fa fa-close"></span>
                             <spring:message code="common.cancel"/>
                         </a>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" >
                             <span class="fa fa-check"></span>
                             <spring:message code="common.save"/>
                         </button>
@@ -38,5 +36,21 @@
     </div>
 </div>
 <jsp:include page="fragments/footer.jsp"/>
+<%--<script type="text/javascript">--%>
+<%--        //function savePass() {--%>
+<%--           // debugger;--%>
+<%--            // var newpass = $("#newPassword").val();--%>
+<%--            // var valid = newpass == $("#confirmPassword").val();--%>
+<%--            // if (!valid) {--%>
+<%--            //     //     $("#error").show();--%>
+<%--            //     alert("bad passw");--%>
+<%--            //     return;--%>
+<%--            // }--%>
+<%--            //  else {--%>
+<%--            //      window.location.href = '/';--%>
+<%--            //  }--%>
+<%--                 //window.location.href = '/';--%>
+<%--        }--%>
+<%--</script>--%>
 </body>
 </html>

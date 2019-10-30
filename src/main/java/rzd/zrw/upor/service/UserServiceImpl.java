@@ -111,6 +111,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void changePassword(User user, String password) {
+        user.setPassword(password);
+        repository.save(prepareToSave(user, passwordEncoder));
+    }
+
+    @Override
+    public boolean checkIfValidOldPassword(User user, String oldPassword) {
+        return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
+
+    @Override
     public AuthorizedUser loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = repository.getByName(name);
         if (user == null) {
@@ -118,14 +129,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         return new AuthorizedUser(user);
     }
-//    @Override
-//    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = repository.getByEmail(email.toLowerCase());
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User " + email + " is not found");
-//        }
-//        return new AuthorizedUser(user);
-//    }
-
 
 }
